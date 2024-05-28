@@ -1,0 +1,32 @@
+﻿@{
+    Layout = null;
+}
+
+<!doctype html>
+<html lang="en">
+@await Component.InvokeAsync("_HeaderViewComponentPartial")
+<body>
+
+    <!--header-->
+    @await Component.InvokeAsync("_NavbarViewComponentPartial")
+
+    <!--/header-->
+
+    <section class="w3l-about-breadcrumb">
+        <div class="breadcrumb-bg breadcrumb-bg-about pt-5">
+            <div class="container pt-lg-5 py-3">
+            </div>
+        </div>
+    </section>
+
+    @RenderBody();
+
+    <!-- footers 20 -->
+    @await Component.InvokeAsync("_DefaultFooterComponentPartial")
+   
+    
+    @await Component.InvokeAsync("_DefaultScriptComponentPartial")
+
+</body>
+
+</html>
