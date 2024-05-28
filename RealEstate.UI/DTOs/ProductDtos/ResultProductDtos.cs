@@ -1,5 +1,6 @@
 ﻿namespace RealEstate.UI.DTOs.ProductDtos
 {
+    // UI tarafinda yani kullanici tarafinda Product yani ilan tablosunun listeleme islemi gerceklesecegi icin simdilik yalnizca bu class olusturuldu.
     public class ResultProductDtos
     {
         public int productID { get; set; }
