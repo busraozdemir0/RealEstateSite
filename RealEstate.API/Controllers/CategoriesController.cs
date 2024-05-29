@@ -30,7 +30,7 @@ namespace RealEstate.API.Controllers
             return Ok("Kategori başarılı bir şekilde eklendi.");
         }
 
-        [HttpDelete] // Silme islemi
+        [HttpDelete("{categoryId}")] // Silme islemi
         public async Task<IActionResult> DeleteCategory(int categoryId)
         {
             _categoryRepository.DeleteCategory(categoryId);
