@@ -20,7 +20,7 @@ namespace RealEstate.UI.ViewComponents.HomePage
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync(); // Gelen icerigi string formatinda oku
-                var values = JsonConvert.DeserializeObject<List<ResultProductDtos>>(jsonData);   // DeserializeObject => json bir degeri okuyor ve bizim istedigimiz metin formatina donusturur
+                var values = JsonConvert.DeserializeObject<List<ResultProductDto>>(jsonData);   // DeserializeObject => json bir degeri okuyor ve bizim istedigimiz metin formatina donusturur
                                                                                                  // SerializeObject => metin formatini json formatina donusturur.
                 return View(values);
             }
