@@ -29,7 +29,7 @@ namespace RealEstate.API.Controllers
             return Ok("Hakkımızda kısmı başarılı bir şekilde eklendi.");
         }
 
-        [HttpDelete] // Silme islemi
+        [HttpDelete("{id}")] // Silme islemi
         public async Task<IActionResult> DeleteWhoWeAreDetail(int id)
         {
             _whoWeAreDetailRepository.DeleteWhoWeAreDetail(id);

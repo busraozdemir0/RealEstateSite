@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using RealEstate.UI.DTOs.WhoAreDetailDtos;
+using RealEstate.UI.DTOs.WhoWeAreDetailDtos;
 using System.Runtime.ConstrainedExecution;
 
 namespace RealEstate.UI.ViewComponents.HomePage
@@ -26,7 +26,7 @@ namespace RealEstate.UI.ViewComponents.HomePage
                 var jsonData = await responseMessage.Content.ReadAsStringAsync(); // Biz kimiz alani icin
                 var jsonData2 = await responseMessage2.Content.ReadAsStringAsync(); // Services alani icin
 
-                var value = JsonConvert.DeserializeObject<List<ResultWhoAreDetailDto>>(jsonData); // Biz kimiz alani icin
+                var value = JsonConvert.DeserializeObject<List<ResultWhoWeAreDetailDto>>(jsonData); // Biz kimiz alani icin
                 var value2 = JsonConvert.DeserializeObject<List<ResultServiceDto>>(jsonData2);  // Services alani icin
                
                 ViewBag.title = value.Select(x => x.Title).FirstOrDefault();

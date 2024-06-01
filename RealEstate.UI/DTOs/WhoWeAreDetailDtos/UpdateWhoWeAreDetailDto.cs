@@ -1,7 +1,6 @@
-﻿namespace RealEstate.UI.DTOs.WhoAreDetailDtos
+﻿namespace RealEstate.UI.DTOs.WhoWeAreDetailDtos
 {
-    // Biz kimiz alani altinda yer alan hizmetlerin listelenecegi alan icin kullanilmaktadir.
-    public class ResultWhoAreDetailDto
+    public class UpdateWhoWeAreDetailDto
     {
         public int WhoWeAreDetailID { get; set; }
         public string Title { get; set; }
