@@ -29,5 +29,21 @@ namespace RealEstate.API.Controllers
             var values = await _productRepository.GetAllProductWithCategoryAsync();
             return Ok(values);
         }
+
+        [HttpGet("ProductDealOfTheDayStatusChangeToTrue/{id}")]
+        public IActionResult ProductDealOfTheDayStatusChangeToTrue(int id)
+        {
+            _productRepository.ProductDealOfTheDayStatusChangeToTrue(id);
+            return Ok("İlan günün fırsatı olarak seçildi.");
+        }
+
+        [HttpGet("ProductDealOfTheDayStatusChangeToFalse/{id}")]
+        public IActionResult ProductDealOfTheDayStatusChangeToFalse(int id)
+        {
+            _productRepository.ProductDealOfTheDayStatusChangeToFalse(id);
+            return Ok("İlan günün fırsatından çıkarıldı.");
+        }
+
+    
     }
 }

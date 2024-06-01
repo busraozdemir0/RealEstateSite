@@ -2,6 +2,8 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Admin/Index.cshtml";
+
+    int count = 0;
 }
 
 <div class="container-fluid pt-4 px-4">
@@ -23,13 +25,15 @@
                                 <th scope="col">Sil</th>
                                 <th scope="col">Güncelle</th>
                                 <th scope="col">Sitede Gör</th>
+                                <th scope="col">Günün Fırsatı</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
+                                count++;
                                 <tr>
-                                    <th scope="row">@item.productID</th>
+                                    <th scope="row">@count</th>
                                     <td>@item.title</td>
                                     <td>@item.city</td>
                                     <td>@item.district</td>
@@ -39,6 +43,16 @@
                                     <td><a data-id="@item.productID" asp-controller="Product" asp-action="DeleteProduct" asp-route-productId="@item.productID" class="btn btn-outline-danger">Sil</a></td>
                                     <td><a data-id="@item.productID" asp-controller="Product" asp-action="UpdateProduct" asp-route-productId="@item.productID" class="btn btn-outline-success">Güncelle</a></td>
                                     <td><a data-id="@item.productID" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@item.productID" class="btn btn-outline-primary">Sitede Gör</a></td>
+                                    <td>
+                                        @if (item.dealOfTheDay)
+                                        {
+                                            <a data-id="@item.productID" asp-controller="Product" asp-action="ProductDealOfTheDayStatusChangeToFalse" asp-route-id="@item.productID" class="btn btn-outline-secondary">Pasif Yap</a>
+                                        }
+                                        @if (!item.dealOfTheDay)
+                                        {
+                                            <a data-id="@item.productID" asp-controller="Product" asp-action="ProductDealOfTheDayStatusChangeToTrue" asp-route-id="@item.productID" class="btn btn-outline-warning">Aktif Yap</a>
+                                        }
+                                    </td>
                                 </tr>
                             }
                         </tbody>
