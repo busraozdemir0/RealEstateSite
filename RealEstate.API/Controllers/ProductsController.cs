@@ -44,6 +44,12 @@ namespace RealEstate.API.Controllers
             return Ok("İlan günün fırsatından çıkarıldı.");
         }
 
-    
+        [HttpGet("GetLast5ProductList")]
+        public async Task<IActionResult> GetLast5ProductList()
+        {
+            var values = await _productRepository.GetLast5ProductAsync();
+            return Ok(values);
+        }
+
     }
 }

@@ -37,6 +37,17 @@ namespace RealEstate.API.Models.Repositories.ProductRepository
             }
         }
 
+        public async Task<List<ResultProductDto>> GetLast5ProductAsync()
+        {
+            // Turu kiralik olan son 5 ilan listeleniyor
+            string query = "Select Top(5) * From Product Where Type='Kiralık' Order By ProductID Desc"; // Once ilanlari azalan bir sekilde sirala ve ardindan en ustten 5 ilani cek
+            using (var connection = _context.CreateConnection())
+            {
+                var values = await connection.QueryAsync<ResultProductDto>(query);
+                return values.ToList();
+            }
+        }
+
         public async void ProductDealOfTheDayStatusChangeToFalse(int id)
         {
             string query = "Update Product set DealOfTheDay=0 where ProductID=@productID";
