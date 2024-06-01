@@ -1,6 +1,6 @@
-﻿namespace RealEstate.UI.DTOs.WhoWeAreDetailDtos
+﻿namespace RealEstate.UI.DTOs.ServiceDtos
 {
-    public class ResultServiceDto
+    public class UpdateServiceDto
     {
         public int ServiceID { get; set; }
         public string ServiceName { get; set; }
