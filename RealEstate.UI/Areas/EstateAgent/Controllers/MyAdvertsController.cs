@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RealEstate.UI.DTOs.ProductDtos;
+using RealEstate.UI.Services;
 
 namespace RealEstate.UI.Areas.EstateAgent.Controllers
 {
@@ -8,14 +9,16 @@ namespace RealEstate.UI.Areas.EstateAgent.Controllers
     public class MyAdvertsController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ILoginService _loginService;
 
-        public MyAdvertsController(IHttpClientFactory httpClientFactory)
+        public MyAdvertsController(IHttpClientFactory httpClientFactory, ILoginService loginService)
         {
             _httpClientFactory = httpClientFactory;
+            _loginService = loginService;
         }
-        public async Task<IActionResult> Index(int id)
+        public async Task<IActionResult> Index()
         {
-            id = 1;
+            var id= _loginService.GetUserId; // Giris yapan kullanicinin id bilgisi (Kullanicinin id'si ile kullanici kendi ekledigi ilanlarini gorebilecek)
             var client = _httpClientFactory.CreateClient();
             var responseMessage = await client.GetAsync("https://localhost:44314/api/Products/ProductAdvertsListByEmployee?id=" + id);
             if (responseMessage.IsSuccessStatusCode)

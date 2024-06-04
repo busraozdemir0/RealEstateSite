@@ -1,7 +1,26 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using RealEstate.UI.Services;
+using System.IdentityModel.Tokens.Jwt;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddHttpClient();
+
+// JWT ile giris yapabilmek icin yapilandirmalar
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddCookie(JwtBearerDefaults.AuthenticationScheme, opt =>
+{
+    opt.LoginPath = "/Login/Index/"; // Kullanici giris yapmadan baska sayfalara erismeye calisirsa bu sayfaya yonlendirilecek.
+    opt.LogoutPath = "/Login/Logout/";
+    opt.AccessDeniedPath = "/Pages/AccessDenied/";
+    opt.Cookie.HttpOnly = true;
+    opt.Cookie.SameSite = SameSiteMode.Strict;
+    opt.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+    opt.Cookie.Name = "RealEstateJwt"; // Cookie'nin ismini belirledik
+});
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -19,6 +38,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication(); // Login islemi kullandigimizi uygulamamiza bildirmis olduk
 app.UseAuthorization();
 
 app.MapControllerRoute(

@@ -1,28 +1,41 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RealEstate.UI.DTOs.EmployeeDtos;
+using RealEstate.UI.Services;
 using System.Text;
 
 namespace RealEstate.UI.Controllers
 {
+    [Authorize]
     public class EmployeeController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ILoginService _loginService;
 
-        public EmployeeController(IHttpClientFactory httpClientFactory)
+        public EmployeeController(IHttpClientFactory httpClientFactory, ILoginService loginService)
         {
             _httpClientFactory = httpClientFactory;
+            _loginService = loginService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:44314/api/Employees");
-            if (responseMessage.IsSuccessStatusCode)
+            var user = User.Claims;
+            var userId = _loginService.GetUserId; // Giris yapan kullanicinin id bilgisi
+
+            // Bu sayfaya erismek icin realestatetoken tipinde token olup olmadigi kontrol ediliyor.
+            var token = User.Claims.FirstOrDefault(x => x.Type == "realestatetoken")?.Value; // Giren kullanicinin erisim token'i realestatetoken tipinde claim'e sahipse token degerine atanacak boyle bir token yok ise null olacak
+            if (token != null)
             {
-                var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<ResultEmployeeDto>>(jsonData);
-                return View(values);
+                var client = _httpClientFactory.CreateClient();
+                var responseMessage = await client.GetAsync("https://localhost:44314/api/Employees");
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    var jsonData = await responseMessage.Content.ReadAsStringAsync();
+                    var values = JsonConvert.DeserializeObject<List<ResultEmployeeDto>>(jsonData);
+                    return View(values);
+                }
             }
             return View();
         }
@@ -67,7 +80,7 @@ namespace RealEstate.UI.Controllers
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<UpdateEmployeeDto>(jsonData); 
+                var values = JsonConvert.DeserializeObject<UpdateEmployeeDto>(jsonData);
                 return View(values);
             }
             return View();
