@@ -4,6 +4,9 @@ using RealEstate.API.Models.Repositories.BottomGridRepositories;
 using RealEstate.API.Models.Repositories.CategoryRepository;
 using RealEstate.API.Models.Repositories.ContactRepositories;
 using RealEstate.API.Models.Repositories.EmployeeRepositories;
+using RealEstate.API.Models.Repositories.EstateAgentRepositories.DashboardRepositories.ChartRepositories;
+using RealEstate.API.Models.Repositories.EstateAgentRepositories.DashboardRepositories.LastProductRepositories;
+using RealEstate.API.Models.Repositories.EstateAgentRepositories.DashboardRepositories.StatisticRepositories;
 using RealEstate.API.Models.Repositories.PopularLocationRepositories;
 using RealEstate.API.Models.Repositories.ProductRepository;
 using RealEstate.API.Models.Repositories.ServiceRepository;
@@ -28,6 +31,9 @@ builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddTransient<IStatisticsRepository, StatisticsRepository>();
 builder.Services.AddTransient<IContactRepository, ContactRepository>();
 builder.Services.AddTransient<IToDoListRepository, ToDoListRepository>();
+builder.Services.AddTransient<IStatisticRepository, StatisticRepository>();
+builder.Services.AddTransient<IChartRepository, ChartRepository>();
+builder.Services.AddTransient<ILast5ProductRepository, Last5ProductRepository>();
 
 // SignalR anlik olarak verileri cekebilmemizi ve isleyebilmemizi saglar
 // Baskalari bizim apimizi kullanabilsin diye konfigurasyon ayari yapiyoruz.

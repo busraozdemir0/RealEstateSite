@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/EstateAgent/Views/LayoutEstateAgent/Index.cshtml";
+}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+
+            @await Component.InvokeAsync("_EstateAgentDashboardStatisticComponentPartial")
+
+          @*   @await Component.InvokeAsync("_EstateAgentDashboardChartComponentPartial") *@
+
+            @await Component.InvokeAsync("_EstateAgentLast5ProductComponentPartial")
+        </div>
+    </div>
+</div>
