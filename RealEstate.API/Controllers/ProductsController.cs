@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
+using RealEstate.API.DTOs.ProductDtos;
 using RealEstate.API.Models.Repositories.ProductRepository;
 
 namespace RealEstate.API.Controllers
@@ -63,6 +64,13 @@ namespace RealEstate.API.Controllers
         {
             var values = await _productRepository.GetProductAdvertListByEmployeeAsyncByFalse(id);
             return Ok(values);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateProduct(CreateProductDto createProductDto)
+        {
+            await _productRepository.CreateProduct(createProductDto);
+            return Ok("İlan başarıyla eklendi");
         }
 
     }

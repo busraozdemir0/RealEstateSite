@@ -11,5 +11,6 @@ namespace RealEstate.API.Models.Repositories.ProductRepository
         void ProductDealOfTheDayStatusChangeToTrue(int id); // Bu ilani gunun firsati yap
         void ProductDealOfTheDayStatusChangeToFalse(int id); // Bu ilani gunun firsatindan cikar
         Task<List<ResultLast5ProductWithCategoryDto>> GetLast5ProductAsync(); // Son eklenen 5 ilan listelenecek
+        Task CreateProduct(CreateProductDto createProductDto);
     }
 }

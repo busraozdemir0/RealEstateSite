@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using RealEstate.UI.DTOs.CategoryDtos;
 using RealEstate.UI.DTOs.ProductDtos;
 using RealEstate.UI.Services;
+using System.Text;
 
 namespace RealEstate.UI.Areas.EstateAgent.Controllers
 {
@@ -42,6 +45,48 @@ namespace RealEstate.UI.Areas.EstateAgent.Controllers
                 var values = JsonConvert.DeserializeObject<List<ResultProductAdvertListWithCategoryByEmployeeDto>>(jsonData);   
                                                                                                                                 
                 return View(values);
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CreateAdvert()
+        {
+            // İlan ekleme sayfasinda kategorileri dropdown ile listeleyebilmek icin (ilan eklerken kategori secimi islemi icin)
+            var client = _httpClientFactory.CreateClient();
+            var responseMessage = await client.GetAsync("https://localhost:44314/api/Categories");
+
+            var jsonData = await responseMessage.Content.ReadAsStringAsync();
+            var values = JsonConvert.DeserializeObject<List<ResultCategoryDto>>(jsonData);
+
+            List<SelectListItem> categoryValues = (from x in values.ToList()
+                                                   select new SelectListItem
+                                                   {
+                                                       Text = x.CategoryName,
+                                                       Value = x.CategoryID.ToString()
+                                                   }).ToList();
+            ViewBag.categories = categoryValues;
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateAdvert(CreateProductDto createProductDto)
+        {
+            createProductDto.DealOfTheDay = false;
+            createProductDto.AdvertisementDate = DateTime.Now;
+            createProductDto.ProductStatus = true;
+
+            var id = _loginService.GetUserId;
+            createProductDto.EmployeeID = int.Parse(id);
+
+            var client = _httpClientFactory.CreateClient();
+            var jsonData = JsonConvert.SerializeObject(createProductDto); 
+            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            var responseMessage = await client.PostAsync("https://localhost:44314/api/Products", stringContent);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("ActiveAdverts","MyAdverts");
             }
             return View();
         }
