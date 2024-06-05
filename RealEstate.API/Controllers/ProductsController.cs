@@ -32,16 +32,16 @@ namespace RealEstate.API.Controllers
         }
 
         [HttpGet("ProductDealOfTheDayStatusChangeToTrue/{id}")]
-        public IActionResult ProductDealOfTheDayStatusChangeToTrue(int id)
+        public async Task<IActionResult> ProductDealOfTheDayStatusChangeToTrue(int id)
         {
-            _productRepository.ProductDealOfTheDayStatusChangeToTrue(id);
+            await _productRepository.ProductDealOfTheDayStatusChangeToTrue(id);
             return Ok("İlan günün fırsatı olarak seçildi.");
         }
 
         [HttpGet("ProductDealOfTheDayStatusChangeToFalse/{id}")]
-        public IActionResult ProductDealOfTheDayStatusChangeToFalse(int id)
+        public async Task<IActionResult> ProductDealOfTheDayStatusChangeToFalse(int id)
         {
-            _productRepository.ProductDealOfTheDayStatusChangeToFalse(id);
+            await _productRepository.ProductDealOfTheDayStatusChangeToFalse(id);
             return Ok("İlan günün fırsatından çıkarıldı.");
         }
 
@@ -73,5 +73,11 @@ namespace RealEstate.API.Controllers
             return Ok("İlan başarıyla eklendi");
         }
 
+        [HttpGet("GetProductByProductId")]
+        public async Task<IActionResult> GetProductByProductId(int id)
+        {
+            var values = await _productRepository.GetProductByProductId(id);
+            return Ok(values);
+        }
     }
 }
