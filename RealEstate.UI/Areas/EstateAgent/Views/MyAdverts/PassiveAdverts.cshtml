@@ -1,0 +1,52 @@
+﻿@model List<ResultProductAdvertListWithCategoryByEmployeeDto>
+@{
+    ViewData["Title"] = "PassiveAdverts";
+    Layout = "~/Areas/EstateAgent/Views/LayoutEstateAgent/Index.cshtml";
+
+    int count = 0;
+}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-light rounded h-100 p-4">
+                <h6 class="mb-4">Geçmiş İlan Listesi</h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">İlan Başlığı</th>
+                                <th scope="col">Kategori</th>
+                                <th scope="col">Fiyat</th>
+                                <th scope="col">Tür</th>
+                                <th scope="col">Sil</th>
+                                <th scope="col">Aktif Yap</th>
+                                <th scope="col">Güncelle</th>
+                                <th scope="col">Sitede Gör</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                count++;
+                                <tr>
+                                    <th scope="row">@count</th>
+                                    <td>@item.Title</td>
+                                    <td>@item.CategoryName</td>
+                                    <td>@item.Price</td>
+                                    <td>@item.Type</td>
+                                    <td><a data-id="@item.ProductID" asp-controller="Product" asp-action="DeleteProduct" asp-route-productId="@item.ProductID" class="btn btn-outline-danger">Sil</a></td>
+                                    <td><a data-id="@item.ProductID" asp-controller="Product" asp-action="DeleteProduct" asp-route-productId="@item.ProductID" class="btn btn-outline-warning">Aktif Yap</a></td>
+                                    <td><a data-id="@item.ProductID" asp-controller="Product" asp-action="UpdateProduct" asp-route-productId="@item.ProductID" class="btn btn-outline-success">Güncelle</a></td>
+                                    <td><a data-id="@item.ProductID" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@item.ProductID" class="btn btn-outline-primary">Sitede Gör</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <a asp-controller="Product" asp-action="CreateProduct" class="btn btn-outline-info">Yeni İlan Girişi</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

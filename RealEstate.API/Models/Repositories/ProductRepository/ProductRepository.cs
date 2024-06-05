@@ -48,15 +48,28 @@ namespace RealEstate.API.Models.Repositories.ProductRepository
             }
         }
 
-        // Kullaninin yayinladigi ilan listesini veren metod
-        public async Task<List<ResultProductAdvertListWithCategoryByEmployeeDto>> GetProductAdvertListByEmployeeAsync(int id)
+        // Kullaninin yayinladigi aktif ilan listesini veren metod
+        public async Task<List<ResultProductAdvertListWithCategoryByEmployeeDto>> GetProductAdvertListByEmployeeAsyncByTrue(int id)
         {
-            string query = "Select ProductID, Title, Price, City, District, CategoryName, CoverImage, Type, Address, DealOfTheDay From Product inner join Category on Product.ProductCategory=Category.CategoryID where EmployeeID=@employeeId"; 
+            string query = "Select ProductID, Title, Price, City, District, CategoryName, CoverImage, Type, Address, DealOfTheDay From Product inner join Category on Product.ProductCategory=Category.CategoryID where EmployeeID=@employeeId And ProductStatus=1"; 
             var parameters = new DynamicParameters();
             parameters.Add("@employeeId", id);
             using (var connection = _context.CreateConnection())
             {
                 var values = await connection.QueryAsync<ResultProductAdvertListWithCategoryByEmployeeDto>(query,parameters);
+                return values.ToList();
+            }
+        }
+
+        // Kullaninin yayinladigi pasif ilan listesini veren metod
+        public async Task<List<ResultProductAdvertListWithCategoryByEmployeeDto>> GetProductAdvertListByEmployeeAsyncByFalse(int id)
+        {
+            string query = "Select ProductID, Title, Price, City, District, CategoryName, CoverImage, Type, Address, DealOfTheDay From Product inner join Category on Product.ProductCategory=Category.CategoryID where EmployeeID=@employeeId And ProductStatus=0";
+            var parameters = new DynamicParameters();
+            parameters.Add("@employeeId", id);
+            using (var connection = _context.CreateConnection())
+            {
+                var values = await connection.QueryAsync<ResultProductAdvertListWithCategoryByEmployeeDto>(query, parameters);
                 return values.ToList();
             }
         }

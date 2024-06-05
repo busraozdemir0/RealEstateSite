@@ -51,10 +51,17 @@ namespace RealEstate.API.Controllers
             return Ok(values);
         }
 
-        [HttpGet("ProductAdvertsListByEmployee")]
-        public async Task<IActionResult> ProductAdvertsListByEmployee(int id)
+        [HttpGet("GetProductAdvertListByEmployeeAsyncByTrue")]
+        public async Task<IActionResult> GetProductAdvertListByEmployeeAsyncByTrue(int id)
         {
-            var values = await _productRepository.GetProductAdvertListByEmployeeAsync(id);
+            var values = await _productRepository.GetProductAdvertListByEmployeeAsyncByTrue(id);
+            return Ok(values);
+        }
+
+        [HttpGet("GetProductAdvertListByEmployeeAsyncByFalse")]
+        public async Task<IActionResult> GetProductAdvertListByEmployeeAsyncByFalse(int id)
+        {
+            var values = await _productRepository.GetProductAdvertListByEmployeeAsyncByFalse(id);
             return Ok(values);
         }
 
