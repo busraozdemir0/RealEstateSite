@@ -1,0 +1,74 @@
+﻿@model List<ResultInBoxMessageDto>
+
+<div class="nav-item dropdown">
+    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+        <i class="fa fa-envelope me-lg-2"></i>
+        <span class="d-none d-lg-inline-flex">Mesajlar</span>
+    </a>
+    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+
+        @foreach (var item in Model)
+        {
+            <a href="#" class="dropdown-item">
+                <div class="d-flex align-items-center">
+                    <img class="rounded-circle" src="@item.UserImageUrl" alt="" style="width: 40px; height: 40px;">
+                    <div class="ms-2">
+                        <h6 class="fw-normal mb-0">@item.Name bir mesaj gönderdi.</h6>
+                   @*      <small>@(((DateTime)item.SendDate).ToString("dd-MMM-yyyy"))</small> *@
+                        <small>
+                            @{
+                                TimeSpan difference = DateTime.Now - item.SendDate; // iki tarih arasi fark
+                                var secondDifference = 0;
+                                var minuteDifference = 0;
+                                var hourDifference = 0;
+                                var dayDifference = 0;
+
+                                TimeSpan twentyFourHours = TimeSpan.FromHours(24);
+
+                                // Eger yapilan mesaj hem gun hem de saat yonunden su an ki gune ve saate esitse ve toplam saniye 60'tan az ise aradaki toplam saniye farkini bul.
+                                @if (item.SendDate.Day == DateTime.Now.Day
+                        && item.SendDate.Hour == DateTime.Now.Hour
+                        && difference.TotalSeconds < 60)
+                                {
+                                    secondDifference = Convert.ToInt32(Math.Floor(difference.TotalSeconds));
+                                    <span>@secondDifference saniye önce</span>
+                                }
+
+                                // Hem gun hem de saat yonunden su an ki gune ve saate esitse ve toplam dakika 1'den az ise 0 dakika gostermemesi icin 1 dakika once yaz.
+                                else if (item.SendDate.Day == DateTime.Now.Day &&
+                                item.SendDate.Hour == DateTime.Now.Hour &&
+                                difference.TotalMinutes < 1) // Fark 1 dakikadan azsa
+                                {
+                                    <span>1 dakika önce</span>
+                                }
+
+                                // Fark 1 saatten azsa
+                                else if (item.SendDate.Day == DateTime.Now.Day &&
+                                item.SendDate.Hour == DateTime.Now.Hour &&
+                                difference.TotalMinutes < 60)
+                                {
+                                    minuteDifference = Convert.ToInt32(Math.Floor(difference.TotalMinutes));
+                                    <span>@minuteDifference dakika önce</span>
+                                }
+                                // Fark 24 saatten azsa
+                                else if (difference <= twentyFourHours)
+                                {
+                                    hourDifference = Convert.ToInt32(Math.Floor(difference.TotalHours));
+                                    <span>@hourDifference saat önce</span>
+                                }
+                                // Fark 24 saatten fazlaysa
+                                else
+                                {
+                                    dayDifference = Convert.ToInt32(Math.Floor(difference.TotalDays));
+                                    <span>@dayDifference gün önce</span>
+                                }
+                            }
+                        </small>
+                    </div>
+                </div>
+            </a>
+            <hr class="dropdown-divider">
+        }
+        <a href="#" class="dropdown-item text-center">Tüm Mesajları Gör</a>
+    </div>
+</div>
