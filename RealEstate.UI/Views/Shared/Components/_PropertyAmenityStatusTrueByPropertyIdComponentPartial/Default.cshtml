@@ -1,0 +1,13 @@
+﻿@model List<ResultPropertyAmenityByStatusTrueDto>
+
+ @* Amenity tablosu ile iliskili olan PropertyAmenity tablosu listelenmektedir. Bu tablolar ilgili ilanin sagladigi diger ozellikleri/kolayliklari ifade etmektedir. *@
+
+<div class="single-bg-white">
+    <h3 class="post-content-title mb-4">Evin Diğer Özellikleri</h3>
+    <ul class="details-list">
+        @foreach (var item in Model)
+        {
+            <li><strong>@item.Title </strong></li>
+        }
+    </ul>
+</div>

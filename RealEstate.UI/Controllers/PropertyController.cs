@@ -57,8 +57,10 @@ namespace RealEstate.UI.Controllers
             ViewBag.size = values2.ProductSize; // metrekare cinsinden boyutunu ifade etmektedir
             ViewBag.garageCount = values2.GarageSize;
             ViewBag.buildYear = values2.BuildYear;
+            ViewBag.location = values2.Location;
+            ViewBag.videoUrl = values2.VideoUrl;
             
-
+            
             DateTime date1 = DateTime.Now; // Simdiki zaman
             DateTime date2 = values.advertisementDate; // ilanin yayin tarihi
             TimeSpan timeSpan = date1 - date2; // Simdiki zaman ile ilan arasinda ne kadar gun var
