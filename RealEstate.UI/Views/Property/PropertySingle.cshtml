@@ -51,7 +51,7 @@
                 <div class="blog-single-post">
 
 
-                    @* @await Component.InvokeAsync("_PropertySliderComponentPartial") *@
+                    @await Component.InvokeAsync("_PropertySliderComponentPartial")
 
 
                     <div class="single-post-content">
@@ -63,18 +63,15 @@
                         <div class="single-bg-white">
                             <h3 class="post-content-title mb-4">İlan Detayları</h3>
                             <ul class="details-list">
-                                <li><strong>İlan Id :</strong> @ViewBag.produtcId </li>
-                                <li><strong>Metrekate :</strong> @ViewBag.size </li>
+                                <li><strong>Metrekare :</strong> @ViewBag.size </li>
                                 <li><strong>Oda Sayısı :</strong> @ViewBag.roomCount </li>
                                 <li><strong>Yatak Odası :</strong> @ViewBag.bedCount </li>
                                 <li><strong>Banyo Sayısı :</strong> @ViewBag.bathCount </li>
-                                <li><strong>Exterior material :</strong> Brick </li>
                                 <li><strong>Yapı Türü :</strong> Beton </li>
                                 <li><strong>Garaj Sayısı :</strong> @ViewBag.garageCount </li>
-                                <li><strong>Garages :</strong> 15 </li>
                                 <li><strong>Fiyat :</strong> @ViewBag.price ₺ </li>
                                 <li><strong>Yapım Yılı :</strong> @ViewBag.buildYear </li>
-                        @*         <li><strong>İlan Tarihi :</strong> @ViewBag.date.ToString("dd-MMM-yyyy") </li> *@
+                                <li><strong>İlan Tarihi :</strong> @ViewBag.date.ToString("dd-MMM-yyyy") </li>
                             </ul>
                         </div>
 
@@ -98,7 +95,8 @@
                     </div>
                 </div>
             </div>
-            @* @await Component.InvokeAsync("_PropertyAppUserComponentPartial") *@
+
+            @await Component.InvokeAsync("_PropertyAppUserComponentPartial")
 
         </div>
     </div>

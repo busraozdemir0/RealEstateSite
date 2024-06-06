@@ -1,5 +1,6 @@
 using RealEstate.API.Hubs;
 using RealEstate.API.Models.DapperContext;
+using RealEstate.API.Models.Repositories.AppUserRepositories;
 using RealEstate.API.Models.Repositories.BottomGridRepositories;
 using RealEstate.API.Models.Repositories.CategoryRepository;
 using RealEstate.API.Models.Repositories.ContactRepositories;
@@ -9,6 +10,7 @@ using RealEstate.API.Models.Repositories.EstateAgentRepositories.DashboardReposi
 using RealEstate.API.Models.Repositories.EstateAgentRepositories.DashboardRepositories.StatisticRepositories;
 using RealEstate.API.Models.Repositories.MessageRepositories;
 using RealEstate.API.Models.Repositories.PopularLocationRepositories;
+using RealEstate.API.Models.Repositories.ProductImageRepositories;
 using RealEstate.API.Models.Repositories.ProductRepository;
 using RealEstate.API.Models.Repositories.ServiceRepository;
 using RealEstate.API.Models.Repositories.StatisticsRepositories;
@@ -36,6 +38,8 @@ builder.Services.AddTransient<IStatisticRepository, StatisticRepository>();
 builder.Services.AddTransient<IChartRepository, ChartRepository>();
 builder.Services.AddTransient<ILast5ProductRepository, Last5ProductRepository>();
 builder.Services.AddTransient<IMessageRepository, MessageRepository>();
+builder.Services.AddTransient<IProductImageRepository, ProductImageRepository>();
+builder.Services.AddTransient<IAppUserRepository, AppUserRepository>();
 
 // SignalR anlik olarak verileri cekebilmemizi ve isleyebilmemizi saglar
 // Baskalari bizim apimizi kullanabilsin diye konfigurasyon ayari yapiyoruz.

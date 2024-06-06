@@ -42,19 +42,29 @@ namespace RealEstate.UI.Controllers
             var jsonData2 = await responseMessage2.Content.ReadAsStringAsync();
             var values2 = JsonConvert.DeserializeObject<GetProductDetailByIdDto>(jsonData2);
 
-            ViewBag.productId = values.productID;
             ViewBag.title1 = values.title.ToString();
             ViewBag.price = values.price;
             ViewBag.city = values.city;
             ViewBag.district = values.district;
             ViewBag.address = values.address;
             ViewBag.type = values.type;
+            ViewBag.description = values.description;
+            ViewBag.date = values.advertisementDate;
 
-            ViewBag.bathCount = values2.BathCount;
+            ViewBag.roomCount = values2.RoomCount;
             ViewBag.bedCount = values2.BedRoomCount;
-            ViewBag.size = values2.ProductSize;
+            ViewBag.bathCount = values2.BathCount;
+            ViewBag.size = values2.ProductSize; // metrekare cinsinden boyutunu ifade etmektedir
             ViewBag.garageCount = values2.GarageSize;
             ViewBag.buildYear = values2.BuildYear;
+            
+
+            DateTime date1 = DateTime.Now; // Simdiki zaman
+            DateTime date2 = values.advertisementDate; // ilanin yayin tarihi
+            TimeSpan timeSpan = date1 - date2; // Simdiki zaman ile ilan arasinda ne kadar gun var
+            int month = timeSpan.Days / 30; // Gun sayisini 30'a bolunce ay bilgisine ulasilir.
+
+            ViewBag.datediff = month;
 
             return View();
 
