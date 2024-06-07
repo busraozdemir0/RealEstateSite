@@ -162,5 +162,15 @@ namespace RealEstate.API.Models.Repositories.ProductRepository
                 return values.ToList();
             }
         }
+
+        public async Task<List<ResultProductWithCategoryDto>> GetProductByDealOfTheDayTrueWithCategoryAsync()
+        {
+            string query = "Select ProductID, Title, Price, City, District, CategoryName, CoverImage, Type, Address, DealOfTheDay From Product inner join Category on Product.ProductCategory=Category.CategoryID Where DealOfTheDay=1"; // Product tablosunda DealOfTheDay alani yani gunun firsati mi alanini true olanlari getirecek
+            using (var connection = _context.CreateConnection())
+            {
+                var values = await connection.QueryAsync<ResultProductWithCategoryDto>(query);
+                return values.ToList();
+            }
+        }
     }
 }
