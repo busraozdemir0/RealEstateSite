@@ -93,5 +93,13 @@ namespace RealEstate.API.Controllers
             var values = await _productRepository.GetProductByDealOfTheDayTrueWithCategoryAsync();
             return Ok(values);
         }
+
+        // Ana sayfada gunun 3 firsati kismi icin en uygun fiyatli 3 ilan listelenecek (Price alanina gore artan bir siralama yapildi ve en ustteki 3 ilan cekildi)
+        [HttpGet("GetOptimalPrice3Product")]
+        public async Task<IActionResult> GetOptimalPrice3Product()
+        {
+            var values = await _productRepository.GetOptimalPrice3ProductAsync();
+            return Ok(values);
+        }
     }
 }

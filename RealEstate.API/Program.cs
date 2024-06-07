@@ -15,6 +15,7 @@ using RealEstate.API.Models.Repositories.ProductRepository;
 using RealEstate.API.Models.Repositories.PropertyAmenityRepositories;
 using RealEstate.API.Models.Repositories.ServiceRepository;
 using RealEstate.API.Models.Repositories.StatisticsRepositories;
+using RealEstate.API.Models.Repositories.SubFeatureRepositories;
 using RealEstate.API.Models.Repositories.TestimonialRepositories;
 using RealEstate.API.Models.Repositories.ToDoListRepositories;
 using RealEstate.API.Models.Repositories.WhoWeAreDetailRepository;
@@ -42,6 +43,7 @@ builder.Services.AddTransient<IMessageRepository, MessageRepository>();
 builder.Services.AddTransient<IProductImageRepository, ProductImageRepository>();
 builder.Services.AddTransient<IAppUserRepository, AppUserRepository>();
 builder.Services.AddTransient<IPropertyAmenityRepository, PropertyAmenityRepository>();
+builder.Services.AddTransient<ISubFeatureRepository, SubFeatureRepository>();
 
 // SignalR anlik olarak verileri cekebilmemizi ve isleyebilmemizi saglar
 // Baskalari bizim apimizi kullanabilsin diye konfigurasyon ayari yapiyoruz.

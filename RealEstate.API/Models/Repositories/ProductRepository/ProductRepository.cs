@@ -29,8 +29,7 @@ namespace RealEstate.API.Models.Repositories.ProductRepository
         // Urunleri kategori adlariyla birlikte getirme (inner join sorgusu ile)
         public async Task<List<ResultProductWithCategoryDto>> GetAllProductWithCategoryAsync()
         {
-            string query = "Select ProductID, Title, Price, City, District, CategoryName, CoverImage, Type, Address, DealOfTheDay From Product " +
-                "inner join Category on Product.ProductCategory=Category.CategoryID"; // Product tablosunda yer alan ProductCategory alani ile Category tablosunda yer alan CategoryID alanini birbirine inner join yontemi ile entegre ettik.
+            string query = "Select ProductID, Title, Price, City, District, CategoryName, CoverImage, Type, Address, DealOfTheDay From Product inner join Category on Product.ProductCategory=Category.CategoryID"; // Product tablosunda yer alan ProductCategory alani ile Category tablosunda yer alan CategoryID alanini birbirine inner join yontemi ile entegre ettik.
             using (var connection = _context.CreateConnection())
             {
                 var values = await connection.QueryAsync<ResultProductWithCategoryDto>(query);
@@ -169,6 +168,17 @@ namespace RealEstate.API.Models.Repositories.ProductRepository
             using (var connection = _context.CreateConnection())
             {
                 var values = await connection.QueryAsync<ResultProductWithCategoryDto>(query);
+                return values.ToList();
+            }
+        }
+
+        public async Task<List<ResultOptimalPrice3ProductWithCategoryDto>> GetOptimalPrice3ProductAsync()
+        {
+            // Ana sayfada gunun 3 firsati kismi icin en uygun fiyatli 3 ilan listelenecek (Price alanina gore artan bir siralama yapildi ve en ustteki 3 ilan cekildi)
+            string query = "Select Top(3) ProductID, Title, Price, City, District, Description, ProductCategory, CategoryName, CoverImage, AdvertisementDate From Product Inner Join Category On Product.ProductCategory=Category.CategoryID Where Type='Satılık' Order By Price Asc"; 
+            using (var connection = _context.CreateConnection())
+            {
+                var values = await connection.QueryAsync<ResultOptimalPrice3ProductWithCategoryDto>(query);
                 return values.ToList();
             }
         }
