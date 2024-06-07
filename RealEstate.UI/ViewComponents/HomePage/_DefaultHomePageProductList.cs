@@ -1,23 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RealEstate.UI.DTOs.ProductDtos;
+using RealEstate.UI.Models;
 
 namespace RealEstate.UI.ViewComponents.HomePage
 {
     public class _DefaultHomePageProductList:ViewComponent
     {
         private readonly IHttpClientFactory _httpClientFactory;
-
-        public _DefaultHomePageProductList(IHttpClientFactory httpClientFactory)
+        private readonly ApiSettings _apiSettings;
+        public _DefaultHomePageProductList(IHttpClientFactory httpClientFactory, IOptions<ApiSettings> apiSettings)
         {
             _httpClientFactory = httpClientFactory;
+            _apiSettings = apiSettings.Value;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
             // DealOfTheDay alani true olanlar listelenecek (gunun firsati olan ilanlar)
             var client = _httpClientFactory.CreateClient(); // istemci ornegi olusturuldu.
-            var responseMessage = await client.GetAsync("https://localhost:44314/api/Products/GetProductByDealOfTheDayTrueWithCategoryAsync");
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.GetAsync("Products/GetProductByDealOfTheDayTrueWithCategoryAsync");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync(); // Gelen icerigi string formatinda oku

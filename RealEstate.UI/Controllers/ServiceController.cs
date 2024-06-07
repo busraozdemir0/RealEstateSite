@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RealEstate.UI.DTOs.ServiceDtos;
+using RealEstate.UI.Models;
 using System.Text;
 
 namespace RealEstate.UI.Controllers
@@ -8,16 +10,18 @@ namespace RealEstate.UI.Controllers
     public class ServiceController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
-
-        public ServiceController(IHttpClientFactory httpClientFactory)
+        private readonly ApiSettings _apiSettings;
+        public ServiceController(IHttpClientFactory httpClientFactory, IOptions<ApiSettings> apiSettings)
         {
             _httpClientFactory = httpClientFactory;
+            _apiSettings = apiSettings.Value;
         }
 
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:44314/api/Services");
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.GetAsync("Services");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -40,7 +44,8 @@ namespace RealEstate.UI.Controllers
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(createServiceDto); // Ekleme veya guncelleme islemi sirasinda duz metni json veriye donusturecegimiz icin SerializeObject metodu kullanilmaktadir.
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PostAsync("https://localhost:44314/api/Services", stringContent);
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.PostAsync("Services", stringContent);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
@@ -52,7 +57,8 @@ namespace RealEstate.UI.Controllers
         {
             var client = _httpClientFactory.CreateClient();
             // Silme islemi sirasinda kullanilan metod DeleteAsync'dir.
-            var responseMessage = await client.DeleteAsync($"https://localhost:44314/api/Services/{serviceId}"); // buraya /serviceId ekledigimiz icin API tarafinda da HttpDelete kismina  [HttpDelete("{ServiceId}")] seklinde duzenlemeliyiz.
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.DeleteAsync($"Services/{serviceId}"); // buraya /serviceId ekledigimiz icin API tarafinda da HttpDelete kismina  [HttpDelete("{ServiceId}")] seklinde duzenlemeliyiz.
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
@@ -64,7 +70,8 @@ namespace RealEstate.UI.Controllers
         public async Task<IActionResult> UpdateService(int serviceId)
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync($"https://localhost:44314/api/Services/{serviceId}");
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.GetAsync($"Services/{serviceId}");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -80,7 +87,8 @@ namespace RealEstate.UI.Controllers
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(updateServiceDto); // Ekleme veya guncelleme islemi sirasinda duz metni json veriye donusturecegimiz icin SerializeObject metodu kullanilmaktadir.
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PutAsync("https://localhost:44314/api/Services", stringContent); // Guncelleme islemi icin kullanilan metod PutAsync'dir.
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.PutAsync("Services", stringContent); // Guncelleme islemi icin kullanilan metod PutAsync'dir.
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");

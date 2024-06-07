@@ -12,12 +12,12 @@ namespace RealEstate.API.Models.Repositories.EstateAgentRepositories.DashboardRe
         {
             _context = context;
         }
-        public async Task<List<ResultLast5ProductWithCategoryDto>> GetLast5ProductAsync(int id)
+        public async Task<List<ResultLast5ProductWithCategoryDto>> GetLast5Product(int id)
         {
             // Giris yapan kullanicinin ekledigi son 5 ilan listelenecek
-            string query = "Select Top(5) ProductID, Title, Price, City, District, ProductCategory, CategoryName, AdvertisementDate From Product Inner Join Category On Product.ProductCategory=Category.CategoryID Where EmployeeID=@employeeId Order By ProductID Desc"; // Once ilanlari azalan bir sekilde sirala ve ardindan en ustten 5 ilani cek (Product ile Category tablosunu birlestirerek kategorinin adina ulastik
+            string query = "Select Top(5) ProductID, Title, Price, City, District, ProductCategory, CategoryName, AdvertisementDate From Product Inner Join Category On Product.ProductCategory=Category.CategoryID Where AppUserId=@userId Order By ProductID Desc"; // Once ilanlari azalan bir sekilde sirala ve ardindan en ustten 5 ilani cek (Product ile Category tablosunu birlestirerek kategorinin adina ulastik)
             var parameters = new DynamicParameters();
-            parameters.Add("@employeeId", id);
+            parameters.Add("@userId", id);
             using (var connection = _context.CreateConnection())
             {
                 var values = await connection.QueryAsync<ResultLast5ProductWithCategoryDto>(query, parameters);

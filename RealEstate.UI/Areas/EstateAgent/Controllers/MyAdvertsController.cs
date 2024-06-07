@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RealEstate.UI.DTOs.CategoryDtos;
 using RealEstate.UI.DTOs.ProductDtos;
+using RealEstate.UI.Models;
 using RealEstate.UI.Services;
 using System.Text;
 
@@ -13,17 +15,19 @@ namespace RealEstate.UI.Areas.EstateAgent.Controllers
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILoginService _loginService;
-
-        public MyAdvertsController(IHttpClientFactory httpClientFactory, ILoginService loginService)
+        private readonly ApiSettings _apiSettings;
+        public MyAdvertsController(IHttpClientFactory httpClientFactory, ILoginService loginService, IOptions<ApiSettings> apiSettings)
         {
             _httpClientFactory = httpClientFactory;
             _loginService = loginService;
+            _apiSettings = apiSettings.Value;
         }
         public async Task<IActionResult> ActiveAdverts()
         {
             var id= _loginService.GetUserId; // Giris yapan kullanicinin id bilgisi (Kullanicinin id'si ile kullanici kendi ekledigi ilanlarini gorebilecek)
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:44314/api/Products/GetProductAdvertListByEmployeeAsyncByTrue?id=" + id);
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.GetAsync("Products/GetProductAdvertListByEmployeeAsyncByTrue?id=" + id);
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync(); 
@@ -38,7 +42,8 @@ namespace RealEstate.UI.Areas.EstateAgent.Controllers
         {
             var id = _loginService.GetUserId;
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:44314/api/Products/GetProductAdvertListByEmployeeAsyncByFalse?id=" + id);
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.GetAsync("Products/GetProductAdvertListByEmployeeAsyncByFalse?id=" + id);
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -54,7 +59,8 @@ namespace RealEstate.UI.Areas.EstateAgent.Controllers
         {
             // İlan ekleme sayfasinda kategorileri dropdown ile listeleyebilmek icin (ilan eklerken kategori secimi islemi icin)
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:44314/api/Categories");
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.GetAsync("Categories");
 
             var jsonData = await responseMessage.Content.ReadAsStringAsync();
             var values = JsonConvert.DeserializeObject<List<ResultCategoryDto>>(jsonData);
@@ -83,7 +89,8 @@ namespace RealEstate.UI.Areas.EstateAgent.Controllers
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(createProductDto); 
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PostAsync("https://localhost:44314/api/Products", stringContent);
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.PostAsync("Products", stringContent);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("ActiveAdverts","MyAdverts");

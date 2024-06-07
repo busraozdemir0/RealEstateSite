@@ -18,7 +18,7 @@ namespace RealEstate.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetLast5ProductAsync(int id)
         {
-            var values = await _last5ProductRepository.GetLast5ProductAsync(id);
+            var values = await _last5ProductRepository.GetLast5Product(id);
             return Ok(values);
         }
     }

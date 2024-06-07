@@ -1,8 +1,13 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using RealEstate.UI.Models;
 using RealEstate.UI.Services;
+using System.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// appsettings.json sinifinda yazdigimiz ApiSettingsKey'i burada kayit ediyoruz.
+builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection("ApiSettingsKey")); // Models sinifinda yer alan ApiSettings classina appsettings.json dosyasinda yer alan BaseUrl'i configure ediyoruz.
 
 // Add services to the container.
 builder.Services.AddHttpClient();

@@ -13,7 +13,7 @@ namespace RealEstate.API.Models.Repositories.CategoryRepository
             _context = context;
         }
 
-        public async Task<List<ResultCategoryDto>> GetAllCategoryAsync()
+        public async Task<List<ResultCategoryDto>> GetAllCategory()
         {
             // * Dapper ORM yardimi ile kategori listeleme islemi* 
             string query = "Select * From Category";
@@ -24,7 +24,7 @@ namespace RealEstate.API.Models.Repositories.CategoryRepository
             }
         }
 
-        public async void CreateCategory(CreateCategoryDto createCategoryDto)
+        public async Task CreateCategory(CreateCategoryDto createCategoryDto)
         {
             // Dapper ORM'si ile kategori ekleme islemi
             string query = "insert into Category (CategoryName, CategoryStatus) values (@categoryName, @categoryStatus)";
@@ -37,7 +37,7 @@ namespace RealEstate.API.Models.Repositories.CategoryRepository
             }
         }
 
-        public async void DeleteCategory(int categoryId)
+        public async Task DeleteCategory(int categoryId)
         {
             string query = "Delete From Category Where CategoryID=@categoryID";
             var parameters = new DynamicParameters();
@@ -48,7 +48,7 @@ namespace RealEstate.API.Models.Repositories.CategoryRepository
             }
         }
 
-        public async void UpdateCategory(UpdateCategoryDto updateCategoryDto)
+        public async Task UpdateCategory(UpdateCategoryDto updateCategoryDto)
         {
             string query = "Update Category Set CategoryName=@categoryName, CategoryStatus=@categoryStatus where CategoryID=@categoryID";
             var parameters = new DynamicParameters();

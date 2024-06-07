@@ -18,28 +18,28 @@ namespace RealEstate.API.Controllers
         [HttpGet]
         public async Task<IActionResult> PopularLocationList()
         {
-            var values = await _popularLocationRepository.GetAllPopularLocationAsync();
+            var values = await _popularLocationRepository.GetAllPopularLocation();
             return Ok(values);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreatePopularLocation(CreatePopularLocationDto createPopularLocationDto)
         {
-            _popularLocationRepository.CreatePopularLocation(createPopularLocationDto);
+            await _popularLocationRepository.CreatePopularLocation(createPopularLocationDto);
             return Ok("Popüler lokasyon başarılı bir şekilde eklendi.");
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePopularLocation(int id)
         {
-            _popularLocationRepository.DeletePopularLocation(id);
+            await _popularLocationRepository.DeletePopularLocation(id);
             return Ok("Popüler lokasyon başarılı bir şekilde silindi.");
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdatePopularLocation(UpdatePopularLocationDto updatePopularLocationDto)
         {
-            _popularLocationRepository.UpdatePopularLocation(updatePopularLocationDto);
+            await _popularLocationRepository.UpdatePopularLocation(updatePopularLocationDto);
             return Ok("Popüler lokasyon başarılı bir şekilde güncellendi.");
         }
 

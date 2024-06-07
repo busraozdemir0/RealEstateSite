@@ -1,21 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RealEstate.UI.DTOs.ToDoListDtos;
+using RealEstate.UI.Models;
 
 namespace RealEstate.UI.Controllers
 {
     public class ToDoListController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
-
-        public ToDoListController(IHttpClientFactory httpClientFactory)
+        private readonly ApiSettings _apiSettings;
+        public ToDoListController(IHttpClientFactory httpClientFactory, IOptions<ApiSettings> apiSettings)
         {
             _httpClientFactory = httpClientFactory;
+            _apiSettings = apiSettings.Value;
         }
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:44314/api/ToDoLists");
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.GetAsync("ToDoLists");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync(); 

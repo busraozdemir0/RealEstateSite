@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RealEstate.UI.DTOs.WhoWeAreDetailDtos;
+using RealEstate.UI.Models;
 using System.Text;
 
 namespace RealEstate.UI.Controllers
@@ -8,16 +10,18 @@ namespace RealEstate.UI.Controllers
     public class WhoWeAreDetailController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
-
-        public WhoWeAreDetailController(IHttpClientFactory httpClientFactory)
+        private readonly ApiSettings _apiSettings;
+        public WhoWeAreDetailController(IHttpClientFactory httpClientFactory, IOptions<ApiSettings> apiSettings)
         {
             _httpClientFactory = httpClientFactory;
+            _apiSettings = apiSettings.Value;
         }
 
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:44314/api/WhoWeAreDetails");
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.GetAsync("WhoWeAreDetails");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -39,7 +43,8 @@ namespace RealEstate.UI.Controllers
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(createWhoWeAreDetailDto); 
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PostAsync("https://localhost:44314/api/WhoWeAreDetails", stringContent);
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.PostAsync("WhoWeAreDetails", stringContent);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
@@ -51,7 +56,8 @@ namespace RealEstate.UI.Controllers
         {
             var client = _httpClientFactory.CreateClient();
             // Silme islemi sirasinda kullanilan metod DeleteAsync'dir.
-            var responseMessage = await client.DeleteAsync($"https://localhost:44314/api/WhoWeAreDetails/{id}"); 
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.DeleteAsync($"WhoWeAreDetails/{id}"); 
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
@@ -63,7 +69,8 @@ namespace RealEstate.UI.Controllers
         public async Task<IActionResult> UpdateWhoWeAreDetail(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync($"https://localhost:44314/api/WhoWeAreDetails/{id}");
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.GetAsync($"WhoWeAreDetails/{id}");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -79,7 +86,8 @@ namespace RealEstate.UI.Controllers
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(updateWhoWeAreDetailDto); // Ekleme veya guncelleme islemi sirasinda duz metni json veriye donusturecegimiz icin SerializeObject metodu kullanilmaktadir.
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PutAsync("https://localhost:44314/api/WhoWeAreDetails", stringContent); // Guncelleme islemi icin kullanilan metod PutAsync'dir.
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.PutAsync("WhoWeAreDetails", stringContent); // Guncelleme islemi icin kullanilan metod PutAsync'dir.
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");

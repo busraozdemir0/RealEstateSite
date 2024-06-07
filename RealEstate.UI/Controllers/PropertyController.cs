@@ -1,23 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RealEstate.UI.DTOs.ProductDetailDtos;
 using RealEstate.UI.DTOs.ProductDtos;
+using RealEstate.UI.Models;
 
 namespace RealEstate.UI.Controllers
 {
     public class PropertyController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
-
-        public PropertyController(IHttpClientFactory httpClientFactory)
+        private readonly ApiSettings _apiSettings;
+        public PropertyController(IHttpClientFactory httpClientFactory, IOptions<ApiSettings> apiSettings)
         {
             _httpClientFactory = httpClientFactory;
+            _apiSettings = apiSettings.Value;
         }
 
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient(); // istemci ornegi olusturuldu.
-            var responseMessage = await client.GetAsync("https://localhost:44314/api/Products/ProductListWithCategory");
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.GetAsync("Products/ProductListWithCategory");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync(); // Gelen icerigi string formatinda oku
@@ -33,12 +37,14 @@ namespace RealEstate.UI.Controllers
         {
             id = 1;
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:44314/api/Products/GetProductByProductId?id=" + id);
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.GetAsync("Products/GetProductByProductId?id=" + id);
             var jsonData = await responseMessage.Content.ReadAsStringAsync();
             var values = JsonConvert.DeserializeObject<ResultProductDto>(jsonData);
 
             var client2 = _httpClientFactory.CreateClient();
-            var responseMessage2 = await client2.GetAsync("https://localhost:44314/api/ProductDetails/GetProductDetailByProductId?id=" + id);
+            client2.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage2 = await client2.GetAsync("ProductDetails/GetProductDetailByProductId?id=" + id);
             var jsonData2 = await responseMessage2.Content.ReadAsStringAsync();
             var values2 = JsonConvert.DeserializeObject<GetProductDetailByIdDto>(jsonData2);
 
@@ -80,8 +86,9 @@ namespace RealEstate.UI.Controllers
             propertyCategoryId = int.Parse(TempData["propertyCategoryId"].ToString());
             city = TempData["city"].ToString();
             
-            var client = _httpClientFactory.CreateClient(); 
-            var responseMessage = await client.GetAsync($"https://localhost:44314/api/Products/ResultProductWithSearchList?searchKeyValue={searchKeyValue}&propertyCategoryId={propertyCategoryId}&city={city}");
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.GetAsync($"Products/ResultProductWithSearchList?searchKeyValue={searchKeyValue}&propertyCategoryId={propertyCategoryId}&city={city}");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync(); 

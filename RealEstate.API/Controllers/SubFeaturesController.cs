@@ -18,7 +18,7 @@ namespace RealEstate.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetSubFeatureList()
         {
-            var values = await _subFeatureRepository.GetAllSubFeatureAsync();
+            var values = await _subFeatureRepository.GetAllSubFeature();
             return Ok(values);
         }
     }

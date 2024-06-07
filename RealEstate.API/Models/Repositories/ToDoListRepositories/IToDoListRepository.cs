@@ -4,10 +4,10 @@ namespace RealEstate.API.Models.Repositories.ToDoListRepositories
 {
     public interface IToDoListRepository
     {
-        Task<List<ResultToDoListDto>> GetAllToDoListAsync();
-        void CreateToDoList(CreateToDoListDto createToDoListDto);
-        void DeleteToDoList(int toDoListId);
-        void UpdateToDoList(UpdateToDoListDto updateToDoListDto);
+        Task<List<ResultToDoListDto>> GetAllToDoList();
+        Task CreateToDoList(CreateToDoListDto createToDoListDto);
+        Task DeleteToDoList(int toDoListId);
+        Task UpdateToDoList(UpdateToDoListDto updateToDoListDto);
         Task<GetByIDToDoListDto> GetToDoList(int toDoListId);
     }
 }

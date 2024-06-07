@@ -19,28 +19,28 @@ namespace RealEstate.API.Controllers
         [HttpGet]
         public async Task<IActionResult> BottomGridList()
         {
-            var values = await _bottomGridRepository.GetAllBottomGridAsync();
+            var values = await _bottomGridRepository.GetAllBottomGrid();
             return Ok(values);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateBottomGrid(CreateBottomGridDto createBottomGridDto)
         {
-            _bottomGridRepository.CreateBottomGrid(createBottomGridDto);
+            await _bottomGridRepository.CreateBottomGrid(createBottomGridDto);
             return Ok("Veri başarılı bir şekilde eklendi.");
         }
 
         [HttpDelete("{bottomGridId}")]
         public async Task<IActionResult> DeleteBottomGrid(int bottomGridId)
         {
-            _bottomGridRepository.DeleteBottomGrid(bottomGridId);
+            await _bottomGridRepository.DeleteBottomGrid(bottomGridId);
             return Ok("Veri başarılı bir şekilde silindi.");
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateBottomGrid(UpdateBottomGridDto updateBottomGridDto)
         {
-            _bottomGridRepository.UpdateBottomGrid(updateBottomGridDto);
+            await _bottomGridRepository.UpdateBottomGrid(updateBottomGridDto);
             return Ok("Veri başarılı bir şekilde güncellendi.");
         }
 

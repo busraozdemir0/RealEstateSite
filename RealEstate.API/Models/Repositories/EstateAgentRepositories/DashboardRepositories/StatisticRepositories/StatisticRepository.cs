@@ -25,9 +25,9 @@ namespace RealEstate.API.Models.Repositories.EstateAgentRepositories.DashboardRe
         public int ProductCountByEmployeeId(int id)
         {
             // Giris yapan kullanicinin ilan sayisini vermektedir
-            string query = "Select Count(*) From Product Where EmployeeID=@employeeId";
+            string query = "Select Count(*) From Product Where AppUserId=@userId";
             var parameters = new DynamicParameters();
-            parameters.Add("@employeeId", id);
+            parameters.Add("@userId", id);
             using (var connection = _context.CreateConnection())
             {
                 var value = connection.QueryFirstOrDefault<int>(query,parameters);
@@ -37,9 +37,9 @@ namespace RealEstate.API.Models.Repositories.EstateAgentRepositories.DashboardRe
 
         public int ProductCountByStatusFalse(int id)
         {
-            string query = "Select Count(*) From Product Where EmployeeID=@employeeId And ProductStatus=0";
+            string query = "Select Count(*) From Product Where AppUserId=@userId And ProductStatus=0";
             var parameters = new DynamicParameters();
-            parameters.Add("@employeeId", id);
+            parameters.Add("@userId", id);
             using (var connection = _context.CreateConnection())
             {
                 var value = connection.QueryFirstOrDefault<int>(query, parameters);
@@ -49,9 +49,9 @@ namespace RealEstate.API.Models.Repositories.EstateAgentRepositories.DashboardRe
 
         public int ProductCountByStatusTrue(int id)
         {
-            string query = "Select Count(*) From Product Where EmployeeID=@employeeId And ProductStatus=1";
+            string query = "Select Count(*) From Product Where AppUserId=@userId And ProductStatus=1";
             var parameters = new DynamicParameters();
-            parameters.Add("@employeeId", id);
+            parameters.Add("@userId", id);
             using (var connection = _context.CreateConnection())
             {
                 var value = connection.QueryFirstOrDefault<int>(query, parameters);

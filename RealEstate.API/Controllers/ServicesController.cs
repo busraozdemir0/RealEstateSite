@@ -18,28 +18,28 @@ namespace RealEstate.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetServiceList()
         {
-            var values = await _serviceRepository.GetAllServiceAsync();
+            var values = await _serviceRepository.GetAllService();
             return Ok(values);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateService(CreateServiceDto createServiceDto)
         {
-            _serviceRepository.CreateService(createServiceDto);
+            await _serviceRepository.CreateService(createServiceDto);
             return Ok("Hizmet kısmı başarılı bir şekilde eklendi.");
         }
 
         [HttpDelete("{serviceId}")] // Silme islemi
         public async Task<IActionResult> DeleteService(int serviceId)
         {
-            _serviceRepository.DeleteService(serviceId);
+            await _serviceRepository.DeleteService(serviceId);
             return Ok("Hizmet kısmı başarılı bir şekilde silindi.");
         }
 
         [HttpPut] // Guncelleme islemi
         public async Task<IActionResult> UpdateService(UpdateServiceDto updateServiceDto)
         {
-            _serviceRepository.UpdateService(updateServiceDto);
+            await _serviceRepository.UpdateService(updateServiceDto);
             return Ok("Hizmet kısmı başarılı bir şekilde güncellendi.");
         }
 

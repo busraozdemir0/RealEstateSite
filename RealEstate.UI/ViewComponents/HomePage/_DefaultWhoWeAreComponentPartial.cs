@@ -1,25 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RealEstate.UI.DTOs.ServiceDtos;
 using RealEstate.UI.DTOs.WhoWeAreDetailDtos;
+using RealEstate.UI.Models;
 
 namespace RealEstate.UI.ViewComponents.HomePage
 {
     public class _DefaultWhoWeAreComponentPartial:ViewComponent
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        public _DefaultWhoWeAreComponentPartial(IHttpClientFactory httpClientFactory)
+        private readonly ApiSettings _apiSettings;
+        public _DefaultWhoWeAreComponentPartial(IHttpClientFactory httpClientFactory, IOptions<ApiSettings> apiSettings)
         {
             _httpClientFactory = httpClientFactory;
+            _apiSettings = apiSettings.Value;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var client = _httpClientFactory.CreateClient(); // Biz kimiz alani icin
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
             var client2 = _httpClientFactory.CreateClient(); // Biz kimiz yazisi altinda yer alan hizmetler icin bir client daha olusturuldu
+            client2.BaseAddress = new Uri(_apiSettings.BaseUrl);
 
-            var responseMessage = await client.GetAsync("https://localhost:44314/api/WhoWeAreDetails"); // Biz kimiz alani icin
-            var responseMessage2 = await client2.GetAsync("https://localhost:44314/api/Services"); //Biz kimiz yazisi altinda yer alan hizmetler icin
+            var responseMessage = await client.GetAsync("WhoWeAreDetails"); // Biz kimiz alani icin
+            var responseMessage2 = await client2.GetAsync("Services"); //Biz kimiz yazisi altinda yer alan hizmetler icin
 
             if (responseMessage.IsSuccessStatusCode && responseMessage2.IsSuccessStatusCode)
             {

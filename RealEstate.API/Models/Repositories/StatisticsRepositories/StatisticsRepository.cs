@@ -122,7 +122,7 @@ namespace RealEstate.API.Models.Repositories.StatisticsRepositories
         // En fazla ilan veren personelin adini getir
         public string EmployeeNameByMaxProductCount()
         {
-            string query = "Select Name, Count(*) 'product_count' From Product Inner Join Employee On Product.EmployeeID= Employee.EmployeeID Group By Name Order By product_count Desc";
+            string query = "Select Name, Count(*) 'product_count' From Product Inner Join AppUser On Product.AppUserId=AppUser.UserId Group By Name Order By product_count Desc";
 
             using (var connection = _context.CreateConnection())
             {

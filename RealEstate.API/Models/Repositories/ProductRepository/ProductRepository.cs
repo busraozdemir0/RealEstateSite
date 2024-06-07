@@ -51,9 +51,9 @@ namespace RealEstate.API.Models.Repositories.ProductRepository
         // Kullaninin yayinladigi aktif ilan listesini veren metod
         public async Task<List<ResultProductAdvertListWithCategoryByEmployeeDto>> GetProductAdvertListByEmployeeAsyncByTrue(int id)
         {
-            string query = "Select ProductID, Title, Price, City, District, CategoryName, CoverImage, Type, Address, DealOfTheDay From Product inner join Category on Product.ProductCategory=Category.CategoryID where EmployeeID=@employeeId And ProductStatus=1";
+            string query = "Select ProductID, Title, Price, City, District, CategoryName, CoverImage, Type, Address, DealOfTheDay From Product inner join Category on Product.ProductCategory=Category.CategoryID where AppUserId=@userId And ProductStatus=1";
             var parameters = new DynamicParameters();
-            parameters.Add("@employeeId", id);
+            parameters.Add("@userId", id);
             using (var connection = _context.CreateConnection())
             {
                 var values = await connection.QueryAsync<ResultProductAdvertListWithCategoryByEmployeeDto>(query, parameters);
@@ -64,9 +64,9 @@ namespace RealEstate.API.Models.Repositories.ProductRepository
         // Kullaninin yayinladigi pasif ilan listesini veren metod
         public async Task<List<ResultProductAdvertListWithCategoryByEmployeeDto>> GetProductAdvertListByEmployeeAsyncByFalse(int id)
         {
-            string query = "Select ProductID, Title, Price, City, District, CategoryName, CoverImage, Type, Address, DealOfTheDay From Product inner join Category on Product.ProductCategory=Category.CategoryID where EmployeeID=@employeeId And ProductStatus=0";
+            string query = "Select ProductID, Title, Price, City, District, CategoryName, CoverImage, Type, Address, DealOfTheDay From Product inner join Category on Product.ProductCategory=Category.CategoryID where AppUserId=@userId And ProductStatus=0";
             var parameters = new DynamicParameters();
-            parameters.Add("@employeeId", id);
+            parameters.Add("@userId", id);
             using (var connection = _context.CreateConnection())
             {
                 var values = await connection.QueryAsync<ResultProductAdvertListWithCategoryByEmployeeDto>(query, parameters);
@@ -100,7 +100,7 @@ namespace RealEstate.API.Models.Repositories.ProductRepository
 
         public async Task CreateProduct(CreateProductDto createProductDto)
         {
-            string query = "insert into Product (Title, Price, City, District, CoverImage, Address, Description, Type, DealOfTheDay, AdvertisementDate, ProductStatus, ProductCategory, EmployeeID) values (@title, @price, @city, @district, @coverImage, @address, @description, @type, @dealOfTheDay, @advertisementDate, @productStatus, @productCategory, @employeeID)";
+            string query = "insert into Product (Title, Price, City, District, CoverImage, Address, Description, Type, DealOfTheDay, AdvertisementDate, ProductStatus, ProductCategory, AppUserId) values (@title, @price, @city, @district, @coverImage, @address, @description, @type, @dealOfTheDay, @advertisementDate, @productStatus, @productCategory, @userId)";
             var parameters = new DynamicParameters();
             parameters.Add("@title", createProductDto.Title);
             parameters.Add("@price", createProductDto.Price);
@@ -114,7 +114,7 @@ namespace RealEstate.API.Models.Repositories.ProductRepository
             parameters.Add("@advertisementDate", createProductDto.AdvertisementDate);
             parameters.Add("@productStatus", createProductDto.ProductStatus);
             parameters.Add("@productCategory", createProductDto.ProductCategory);
-            parameters.Add("@employeeID", createProductDto.EmployeeID);
+            parameters.Add("@userId", createProductDto.AppUserId);
 
             using (var connection = _context.CreateConnection())
             {

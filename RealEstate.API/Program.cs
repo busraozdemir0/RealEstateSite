@@ -1,49 +1,11 @@
+using RealEstate.API.Containers;
 using RealEstate.API.Hubs;
-using RealEstate.API.Models.DapperContext;
-using RealEstate.API.Models.Repositories.AppUserRepositories;
-using RealEstate.API.Models.Repositories.BottomGridRepositories;
-using RealEstate.API.Models.Repositories.CategoryRepository;
-using RealEstate.API.Models.Repositories.ContactRepositories;
-using RealEstate.API.Models.Repositories.EmployeeRepositories;
-using RealEstate.API.Models.Repositories.EstateAgentRepositories.DashboardRepositories.ChartRepositories;
-using RealEstate.API.Models.Repositories.EstateAgentRepositories.DashboardRepositories.LastProductRepositories;
-using RealEstate.API.Models.Repositories.EstateAgentRepositories.DashboardRepositories.StatisticRepositories;
-using RealEstate.API.Models.Repositories.MessageRepositories;
-using RealEstate.API.Models.Repositories.PopularLocationRepositories;
-using RealEstate.API.Models.Repositories.ProductImageRepositories;
-using RealEstate.API.Models.Repositories.ProductRepository;
-using RealEstate.API.Models.Repositories.PropertyAmenityRepositories;
-using RealEstate.API.Models.Repositories.ServiceRepository;
-using RealEstate.API.Models.Repositories.StatisticsRepositories;
-using RealEstate.API.Models.Repositories.SubFeatureRepositories;
-using RealEstate.API.Models.Repositories.TestimonialRepositories;
-using RealEstate.API.Models.Repositories.ToDoListRepositories;
-using RealEstate.API.Models.Repositories.WhoWeAreDetailRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddTransient<Context>();
-builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
-builder.Services.AddTransient<IProductRepository, ProductRepository>();
-builder.Services.AddTransient<IWhoWeAreDetailRepository, WhoWeAreDetailRepository>();
-builder.Services.AddTransient<IServiceRepository, ServiceRepository>();
-builder.Services.AddTransient<IBottomGridRepository, BottomGridRepository>();
-builder.Services.AddTransient<IPopularLocationRepository, PopularLocationRepository>();
-builder.Services.AddTransient<ITestimonialRepository, TestimonialRepository>();
-builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
-builder.Services.AddTransient<IStatisticsRepository, StatisticsRepository>();
-builder.Services.AddTransient<IContactRepository, ContactRepository>();
-builder.Services.AddTransient<IToDoListRepository, ToDoListRepository>();
-builder.Services.AddTransient<IStatisticRepository, StatisticRepository>();
-builder.Services.AddTransient<IChartRepository, ChartRepository>();
-builder.Services.AddTransient<ILast5ProductRepository, Last5ProductRepository>();
-builder.Services.AddTransient<IMessageRepository, MessageRepository>();
-builder.Services.AddTransient<IProductImageRepository, ProductImageRepository>();
-builder.Services.AddTransient<IAppUserRepository, AppUserRepository>();
-builder.Services.AddTransient<IPropertyAmenityRepository, PropertyAmenityRepository>();
-builder.Services.AddTransient<ISubFeatureRepository, SubFeatureRepository>();
+builder.Services.ContainerDependencies();
 
 // SignalR anlik olarak verileri cekebilmemizi ve isleyebilmemizi saglar
 // Baskalari bizim apimizi kullanabilsin diye konfigurasyon ayari yapiyoruz.

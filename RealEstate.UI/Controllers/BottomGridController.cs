@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RealEstate.UI.DTOs.BottomGridDtos;
+using RealEstate.UI.Models;
 using System.Text;
 
 namespace RealEstate.UI.Controllers
@@ -8,16 +10,18 @@ namespace RealEstate.UI.Controllers
     public class BottomGridController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
-
-        public BottomGridController(IHttpClientFactory httpClientFactory)
+        private readonly ApiSettings _apiSettings;
+        public BottomGridController(IHttpClientFactory httpClientFactory, IOptions<ApiSettings> apiSettings)
         {
             _httpClientFactory = httpClientFactory;
+            _apiSettings = apiSettings.Value;
         }
 
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:44314/api/BottomGrids");
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.GetAsync("BottomGrids");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -39,7 +43,8 @@ namespace RealEstate.UI.Controllers
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(createBottomGridDto); // Ekleme veya guncelleme islemi sirasinda duz metni json veriye donusturecegimiz icin SerializeObject metodu kullanilmaktadir.
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PostAsync("https://localhost:44314/api/BottomGrids", stringContent);
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.PostAsync("BottomGrids", stringContent);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
@@ -50,7 +55,8 @@ namespace RealEstate.UI.Controllers
         public async Task<IActionResult> DeleteBottomGrid(int bottomGridId)
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.DeleteAsync($"https://localhost:44314/api/BottomGrids/{bottomGridId}");
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.DeleteAsync($"BottomGrids/{bottomGridId}");
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
@@ -62,7 +68,8 @@ namespace RealEstate.UI.Controllers
         public async Task<IActionResult> UpdateBottomGrid(int bottomGridId)
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync($"https://localhost:44314/api/BottomGrids/{bottomGridId}");
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.GetAsync($"BottomGrids/{bottomGridId}");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -78,7 +85,8 @@ namespace RealEstate.UI.Controllers
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(updateBottomGridDto); // Ekleme veya guncelleme islemi sirasinda duz metni json veriye donusturecegimiz icin SerializeObject metodu kullanilmaktadir.
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PutAsync("https://localhost:44314/api/BottomGrids", stringContent); // Guncelleme islemi icin kullanilan metod PutAsync'dir.
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.PutAsync("BottomGrids", stringContent); // Guncelleme islemi icin kullanilan metod PutAsync'dir.
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");

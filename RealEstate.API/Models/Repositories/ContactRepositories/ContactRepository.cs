@@ -12,17 +12,17 @@ namespace RealEstate.API.Models.Repositories.ContactRepositories
         {
             _context = context;
         }
-        public void CreateContact(CreateContactDto createContactDto)
+        public Task CreateContact(CreateContactDto createContactDto)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteContact(int contactId)
+        public Task DeleteContact(int contactId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<ResultContactDto>> GetAllContactAsync()
+        public Task<List<ResultContactDto>> GetAllContact()
         {
             throw new NotImplementedException();
         }

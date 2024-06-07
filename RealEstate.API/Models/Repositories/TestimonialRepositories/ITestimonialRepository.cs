@@ -4,7 +4,7 @@ namespace RealEstate.API.Models.Repositories.TestimonialRepositories
 {
     public interface ITestimonialRepository
     {
-        Task<List<ResultTestimonialDto>> GetAllTestimonialAsync();
+        Task<List<ResultTestimonialDto>> GetAllTestimonial();
 
     }
 }

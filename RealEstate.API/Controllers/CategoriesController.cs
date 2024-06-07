@@ -19,28 +19,28 @@ namespace RealEstate.API.Controllers
         [HttpGet]
         public async Task<IActionResult> CategoryList()
         {
-            var values = await _categoryRepository.GetAllCategoryAsync();
+            var values = await _categoryRepository.GetAllCategory();
             return Ok(values);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateCategory(CreateCategoryDto createCategoryDto)
         {
-            _categoryRepository.CreateCategory(createCategoryDto);
+            await _categoryRepository.CreateCategory(createCategoryDto);
             return Ok("Kategori başarılı bir şekilde eklendi.");
         }
 
         [HttpDelete("{categoryId}")] // Silme islemi
         public async Task<IActionResult> DeleteCategory(int categoryId)
         {
-            _categoryRepository.DeleteCategory(categoryId);
+            await _categoryRepository.DeleteCategory(categoryId);
             return Ok("Kategori başarılı bir şekilde silindi.");
         }
 
         [HttpPut] // Guncelleme islemi
         public async Task<IActionResult> UpdateCategory(UpdateCategoryDto updateCategoryDto)
         {
-            _categoryRepository.UpdateCategory(updateCategoryDto);
+            await _categoryRepository.UpdateCategory(updateCategoryDto);
             return Ok("Kategori başarılı bir şekilde güncellendi.");
         }
 

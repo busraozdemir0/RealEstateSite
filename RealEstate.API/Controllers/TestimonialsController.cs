@@ -18,7 +18,7 @@ namespace RealEstate.API.Controllers
         [HttpGet]
         public async Task<IActionResult> TestimonialList()
         {
-            var values = await _testimonialRepository.GetAllTestimonialAsync();
+            var values = await _testimonialRepository.GetAllTestimonial();
             return Ok(values);
         }
     }

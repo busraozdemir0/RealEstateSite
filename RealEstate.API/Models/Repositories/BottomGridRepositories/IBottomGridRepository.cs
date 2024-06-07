@@ -4,10 +4,10 @@ namespace RealEstate.API.Models.Repositories.BottomGridRepositories
 {
     public interface IBottomGridRepository
     {
-        Task<List<ResultBottomGridDto>> GetAllBottomGridAsync();
-        void CreateBottomGrid(CreateBottomGridDto createBottomGridDto);
-        void DeleteBottomGrid(int bottomGridId);
-        void UpdateBottomGrid(UpdateBottomGridDto updateBottomGridDto);
+        Task<List<ResultBottomGridDto>> GetAllBottomGrid();
+        Task CreateBottomGrid(CreateBottomGridDto createBottomGridDto);
+        Task DeleteBottomGrid(int bottomGridId);
+        Task UpdateBottomGrid(UpdateBottomGridDto updateBottomGridDto);
         Task<GetByIDBottomGridDto> GetBottomGrid(int bottomGridId);
     }
 }
