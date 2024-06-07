@@ -46,16 +46,22 @@ app.UseRouting();
 app.UseAuthentication(); // Login islemi kullandigimizi uygulamamiza bildirmis olduk
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Default}/{action=Index}/{id?}");
 
 app.UseEndpoints(endpoints =>
 {
+    // Slug Url icin yapilandirma
     endpoints.MapControllerRoute(
-      name: "areas",
-      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-    );
+        name: "property",
+        pattern: "property/{slug}/{id}",
+        defaults: new { controller = "Property", action = "PropertySingle" });
+
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Default}/{action=Index}/{id?}");
+
+    endpoints.MapControllerRoute(
+        name: "areas",
+        pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 });
 
 app.Run();

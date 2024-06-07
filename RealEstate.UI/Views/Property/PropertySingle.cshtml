@@ -51,7 +51,7 @@
                 <div class="blog-single-post">
 
 
-                    @await Component.InvokeAsync("_PropertySliderComponentPartial")
+                    @await Component.InvokeAsync("_PropertySliderComponentPartial", new { id = ViewBag.productID }) @* productID degeri Property controller'daki PropertySingle action'unun icinde tasinmaktadir. *@
 
 
                     <div class="single-post-content">

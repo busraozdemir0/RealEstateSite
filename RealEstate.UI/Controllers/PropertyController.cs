@@ -32,10 +32,11 @@ namespace RealEstate.UI.Controllers
             return View();
         }
 
-        [HttpGet]
-        public async Task<IActionResult> PropertySingle(int id)
+        [HttpGet("property/{slug}/{id}")]
+        public async Task<IActionResult> PropertySingle(string slug, int id)
         {
-            id = 1;
+            ViewBag.productID = id; // id'den gelen degeri component'e gonderebilmek icin
+
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_apiSettings.BaseUrl);
             var responseMessage = await client.GetAsync("Products/GetProductByProductId?id=" + id);
@@ -48,6 +49,7 @@ namespace RealEstate.UI.Controllers
             var jsonData2 = await responseMessage2.Content.ReadAsStringAsync();
             var values2 = JsonConvert.DeserializeObject<GetProductDetailByIdDto>(jsonData2);
 
+            ViewBag.productId = values.productID;
             ViewBag.title1 = values.title.ToString();
             ViewBag.price = values.price;
             ViewBag.city = values.city;
@@ -56,6 +58,7 @@ namespace RealEstate.UI.Controllers
             ViewBag.type = values.type;
             ViewBag.description = values.description;
             ViewBag.date = values.advertisementDate;
+            ViewBag.slugUrl = values.SlugUrl;
 
             ViewBag.roomCount = values2.RoomCount;
             ViewBag.bedCount = values2.BedRoomCount;
@@ -74,8 +77,24 @@ namespace RealEstate.UI.Controllers
 
             ViewBag.datediff = month;
 
+            // Slug Url olusturm islemi icin
+            string slugFromTitle = CreateSlug(values.title);
+            ViewBag.slugUrl = slugFromTitle;
+
             return View();
 
+        }
+
+        // Slug nedir icin => https://medium.com/@sahinahmetdursun/slug-nedir-331dc581a5d3
+        private string CreateSlug(string title)
+        {
+            title = title.ToLowerInvariant(); // Küçük harfe çevir
+            title = title.Replace(" ", "-"); // Boşlukları tire ile değiştir
+            title = System.Text.RegularExpressions.Regex.Replace(title, @"[^a-z0-9\s-]", ""); // Geçersiz karakterleri kaldır
+            title = System.Text.RegularExpressions.Regex.Replace(title, @"\s+", " ").Trim(); // Birden fazla boşluğu tek boşluğa indir ve kenar boşluklarını kaldır
+            title = System.Text.RegularExpressions.Regex.Replace(title, @"\s", "-"); // Boşlukları tire ile değiştir
+
+            return title;
         }
 
         // Ana sayfadaki feature alaninda yer alan filtreleme islemi icin calisacak

@@ -29,7 +29,7 @@ namespace RealEstate.API.Models.Repositories.ProductRepository
         // Urunleri kategori adlariyla birlikte getirme (inner join sorgusu ile)
         public async Task<List<ResultProductWithCategoryDto>> GetAllProductWithCategoryAsync()
         {
-            string query = "Select ProductID, Title, Price, City, District, CategoryName, CoverImage, Type, Address, DealOfTheDay From Product inner join Category on Product.ProductCategory=Category.CategoryID"; // Product tablosunda yer alan ProductCategory alani ile Category tablosunda yer alan CategoryID alanini birbirine inner join yontemi ile entegre ettik.
+            string query = "Select ProductID, Title, Price, City, District, CategoryName, CoverImage, Type, Address, DealOfTheDay, SlugUrl From Product inner join Category on Product.ProductCategory=Category.CategoryID"; // Product tablosunda yer alan ProductCategory alani ile Category tablosunda yer alan CategoryID alanini birbirine inner join yontemi ile entegre ettik.
             using (var connection = _context.CreateConnection())
             {
                 var values = await connection.QueryAsync<ResultProductWithCategoryDto>(query);
@@ -125,7 +125,7 @@ namespace RealEstate.API.Models.Repositories.ProductRepository
         public async Task<GetProductByProductIdDto> GetProductByProductId(int id)
         {
             // Gelen id'ye gore ilani gosterme
-            string query = "Select ProductID, Title, Price, City, District, CategoryName, CoverImage, Type, Address, Description, DealOfTheDay, AdvertisementDate From Product inner join Category on Product.ProductCategory=Category.CategoryID where ProductID=@productID";
+            string query = "Select ProductID, Title, Price, City, District, CategoryName, CoverImage, Type, Address, Description, DealOfTheDay, AdvertisementDate, SlugUrl From Product inner join Category on Product.ProductCategory=Category.CategoryID where ProductID=@productID";
             var parameters = new DynamicParameters();
             parameters.Add("@productID", id);
             using (var connection = _context.CreateConnection())
