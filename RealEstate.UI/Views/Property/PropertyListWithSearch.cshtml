@@ -1,0 +1,40 @@
+﻿@model List<ResultProductWithSearchListDto>
+@{
+    ViewData["Title"] = "PropertyListWithSearch";
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
+}
+
+<section class="locations-1" id="locations">
+    <div class="locations py-5">
+        <div class="container py-lg-5 py-md-4 py-2">
+            <div class="heading text-center mx-auto">
+                <h3 class="title-big">Arama Sonuçları (@Model.Count)</h3>
+            </div>
+            <div class="row pt-md-5 pt-4">
+                @if (Model.Count != 0)
+                {
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-lg-4 col-md-6 mb-3">
+                            <a href="#">
+                                <div class="box16">
+                                    <div class="rentext-listing-category"><span>@item.Type</span><span>@item.CategoryName</span></div>
+                                    <img class="img-fluid" style="height:200px;width:700px" src="@item.CoverImage" alt="">
+                                    <div class="box-content">
+                                        <h3 class="title">₺ @item.Price</h3>
+                                        <span class="post">@item.Address @item.District - @item.City</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <br />
+                    }
+                }
+                else
+                {
+                    <h3 style="min-height:5em;">Aradığınız kriterlere uygun ilan bulunamadı. Lütfen tekrar deneyin.</h3>
+                }
+            </div>
+        </div>
+    </div>
+</section>

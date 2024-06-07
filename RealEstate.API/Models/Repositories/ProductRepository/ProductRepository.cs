@@ -52,12 +52,12 @@ namespace RealEstate.API.Models.Repositories.ProductRepository
         // Kullaninin yayinladigi aktif ilan listesini veren metod
         public async Task<List<ResultProductAdvertListWithCategoryByEmployeeDto>> GetProductAdvertListByEmployeeAsyncByTrue(int id)
         {
-            string query = "Select ProductID, Title, Price, City, District, CategoryName, CoverImage, Type, Address, DealOfTheDay From Product inner join Category on Product.ProductCategory=Category.CategoryID where EmployeeID=@employeeId And ProductStatus=1"; 
+            string query = "Select ProductID, Title, Price, City, District, CategoryName, CoverImage, Type, Address, DealOfTheDay From Product inner join Category on Product.ProductCategory=Category.CategoryID where EmployeeID=@employeeId And ProductStatus=1";
             var parameters = new DynamicParameters();
             parameters.Add("@employeeId", id);
             using (var connection = _context.CreateConnection())
             {
-                var values = await connection.QueryAsync<ResultProductAdvertListWithCategoryByEmployeeDto>(query,parameters);
+                var values = await connection.QueryAsync<ResultProductAdvertListWithCategoryByEmployeeDto>(query, parameters);
                 return values.ToList();
             }
         }
@@ -92,7 +92,7 @@ namespace RealEstate.API.Models.Repositories.ProductRepository
             string query = "Update Product set DealOfTheDay=1 where ProductID=@productID";
             var parameters = new DynamicParameters();
             parameters.Add("@productID", id);
-            
+
             using (var connection = _context.CreateConnection())
             {
                 await connection.ExecuteAsync(query, parameters);
@@ -126,12 +126,12 @@ namespace RealEstate.API.Models.Repositories.ProductRepository
         public async Task<GetProductByProductIdDto> GetProductByProductId(int id)
         {
             // Gelen id'ye gore ilani gosterme
-            string query = "Select ProductID, Title, Price, City, District, CategoryName, CoverImage, Type, Address, Description, DealOfTheDay, AdvertisementDate From Product inner join Category on Product.ProductCategory=Category.CategoryID where ProductID=@productID"; 
+            string query = "Select ProductID, Title, Price, City, District, CategoryName, CoverImage, Type, Address, Description, DealOfTheDay, AdvertisementDate From Product inner join Category on Product.ProductCategory=Category.CategoryID where ProductID=@productID";
             var parameters = new DynamicParameters();
             parameters.Add("@productID", id);
             using (var connection = _context.CreateConnection())
             {
-                var value = await connection.QueryAsync<GetProductByProductIdDto>(query,parameters);
+                var value = await connection.QueryAsync<GetProductByProductIdDto>(query, parameters);
                 return value.FirstOrDefault();
             }
         }
@@ -146,6 +146,20 @@ namespace RealEstate.API.Models.Repositories.ProductRepository
             {
                 var value = await connection.QueryAsync<GetProductDetailByIdDto>(query, parameters);
                 return value.FirstOrDefault();
+            }
+        }
+
+        public async Task<List<ResultProductWithSearchListDto>> ResultProductWithSearchList(string searchKeyValue, int propertyCategoryId, string city)
+        {
+            string query = "Select * From Product Where Title like '%" + searchKeyValue + "%' And ProductCategory=@propertyCategoryId And City=@city ";
+            var parameters = new DynamicParameters();
+            parameters.Add("@searchKeyValue", searchKeyValue);
+            parameters.Add("@propertyCategoryId", propertyCategoryId);
+            parameters.Add("@city", city);
+            using (var connection = _context.CreateConnection())
+            {
+                var values = await connection.QueryAsync<ResultProductWithSearchListDto>(query, parameters);
+                return values.ToList();
             }
         }
     }
