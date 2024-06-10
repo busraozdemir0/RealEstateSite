@@ -12,24 +12,52 @@ namespace RealEstate.API.Models.Repositories.ContactRepositories
         {
             _context = context;
         }
-        public Task CreateContact(CreateContactDto createContactDto)
+        public async Task CreateContact(CreateContactDto createContactDto)
         {
-            throw new NotImplementedException();
+            string query = "insert into Contact (Name, Subject, Email, Message, SendDate) values (@name, @subject, @email, @message, @sendDate)";
+            var parameters = new DynamicParameters();
+            parameters.Add("@name", createContactDto.Name);
+            parameters.Add("@subject", createContactDto.Subject);
+            parameters.Add("@email", createContactDto.Email);
+            parameters.Add("@message", createContactDto.Message);
+            parameters.Add("@sendDate", DateTime.Now);
+            using (var connection = _context.CreateConnection())
+            {
+                await connection.ExecuteAsync(query, parameters);
+            }
         }
 
-        public Task DeleteContact(int contactId)
+        public async Task<List<ResultContactDto>> GetAllContact()
         {
-            throw new NotImplementedException();
+            string query = "Select * From Contact";
+            using (var connection = _context.CreateConnection())
+            {
+                var values = await connection.QueryAsync<ResultContactDto>(query);
+                return values.ToList();
+            }
         }
 
-        public Task<List<ResultContactDto>> GetAllContact()
+        public async Task DeleteContact(int contactId)
         {
-            throw new NotImplementedException();
+            string query = "Delete From Contact Where ContactID=@contactID";
+            var parameters = new DynamicParameters();
+            parameters.Add("@contactID", contactId);
+            using (var connection = _context.CreateConnection())
+            {
+                await connection.ExecuteAsync(query, parameters);
+            }
         }
 
-        public Task<GetByIDContactDto> GetContact(int contactId)
+        public async Task<GetByIDContactDto> GetContact(int contactId)
         {
-            throw new NotImplementedException();
+            string query = "Select * From Contact Where ContactID=@contactID";
+            var parameters = new DynamicParameters();
+            parameters.Add("@contactID", contactId);
+            using (var connection = _context.CreateConnection())
+            {
+                var value = await connection.QueryFirstOrDefaultAsync<GetByIDContactDto>(query, parameters);
+                return value;
+            }
         }
 
         public async Task<List<Last4ContactResultDto>> GetLast4Contact()

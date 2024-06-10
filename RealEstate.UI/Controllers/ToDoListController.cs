@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RealEstate.UI.DTOs.ToDoListDtos;
@@ -6,6 +7,7 @@ using RealEstate.UI.Models;
 
 namespace RealEstate.UI.Controllers
 {
+    [Authorize]
     public class ToDoListController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;

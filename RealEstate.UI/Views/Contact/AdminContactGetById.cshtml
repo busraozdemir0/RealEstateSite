@@ -1,0 +1,32 @@
+﻿@model GetByIDContactDto
+@{
+    ViewData["Title"] = "AdminContactGetById";
+    Layout = "~/Views/Admin/Index.cshtml";
+}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-light rounded h-100 p-4">
+                <h6 class="mb-4">Mesaj Detay Sayfası</h6>
+                <form>
+                    <input type="hidden" asp-for="ContactID" disabled />
+                    <label>Adı</label>
+                    <input type="text" asp-for="Name" class="form-control" disabled />
+                    <br />
+                    <label>E-Mail</label>
+                    <input type="text" asp-for="Email" class="form-control" disabled />
+                    <br />
+                    <label>Konu</label>
+                    <input type="text" asp-for="Subject" class="form-control" disabled />
+                    <br />
+                    <label>Mesaj Tarihi ve İçeriği: @Model.SendDate.ToString("dd-MMM-yyyy")</label>
+                    <input type="text" asp-for="Message" class="form-control" disabled />
+                    <br />
+                    <a href="mailto:@Model.Email" class="btn btn-success"><i class="fa fa-envelope"></i> Cevapla</a>
+                    <a href="/Contact/AdminContactList/" class="btn btn-secondary"><i class="fa fa-arrow-left"></i> Geri</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

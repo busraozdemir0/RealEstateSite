@@ -48,7 +48,7 @@ namespace RealEstate.API.Models.Repositories.CategoryRepository
             }
         }
 
-        public async Task UpdateCategory(UpdateCategoryDto updateCategoryDto)
+        public async Task UpdateCategory(UpdateAddressDto updateCategoryDto)
         {
             string query = "Update Category Set CategoryName=@categoryName, CategoryStatus=@categoryStatus where CategoryID=@categoryID";
             var parameters = new DynamicParameters();
@@ -61,14 +61,14 @@ namespace RealEstate.API.Models.Repositories.CategoryRepository
             }
         }
 
-        public async Task<GetByIDCategoryDto> GetCategory(int categoryId)
+        public async Task<GetByIDAddressDto> GetCategory(int categoryId)
         {
             string query = "Select * From Category Where CategoryID=@categoryID";
             var parameters = new DynamicParameters();
             parameters.Add("@categoryID", categoryId);
             using (var connection = _context.CreateConnection())
             {
-                var value=await connection.QueryFirstOrDefaultAsync<GetByIDCategoryDto>(query, parameters);
+                var value=await connection.QueryFirstOrDefaultAsync<GetByIDAddressDto>(query, parameters);
                 return value;
             }
         }

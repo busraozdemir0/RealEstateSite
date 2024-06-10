@@ -38,7 +38,7 @@ namespace RealEstate.API.Controllers
         }
 
         [HttpPut] // Guncelleme islemi
-        public async Task<IActionResult> UpdateCategory(UpdateCategoryDto updateCategoryDto)
+        public async Task<IActionResult> UpdateCategory(UpdateAddressDto updateCategoryDto)
         {
             await _categoryRepository.UpdateCategory(updateCategoryDto);
             return Ok("Kategori başarılı bir şekilde güncellendi.");

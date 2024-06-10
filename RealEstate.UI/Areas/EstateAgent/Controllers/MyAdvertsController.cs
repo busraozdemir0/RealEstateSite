@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -11,6 +12,7 @@ using System.Text;
 namespace RealEstate.UI.Areas.EstateAgent.Controllers
 {
     [Area("EstateAgent")]
+    [Authorize]
     public class MyAdvertsController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;

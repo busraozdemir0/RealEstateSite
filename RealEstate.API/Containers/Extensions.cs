@@ -1,4 +1,5 @@
 ﻿using RealEstate.API.Models.DapperContext;
+using RealEstate.API.Models.Repositories.AddressRepositories;
 using RealEstate.API.Models.Repositories.AppUserRepositories;
 using RealEstate.API.Models.Repositories.BottomGridRepositories;
 using RealEstate.API.Models.Repositories.CategoryRepository;
@@ -46,6 +47,7 @@ namespace RealEstate.API.Containers
             services.AddTransient<IAppUserRepository, AppUserRepository>();
             services.AddTransient<IPropertyAmenityRepository, PropertyAmenityRepository>();
             services.AddTransient<ISubFeatureRepository, SubFeatureRepository>();
+            services.AddTransient<IAddressRepository, AddressRepository>();
         }
     }
 }

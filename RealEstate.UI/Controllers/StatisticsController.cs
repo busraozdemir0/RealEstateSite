@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using RealEstate.UI.Models;
 
 namespace RealEstate.UI.Controllers
 {
+    [Authorize]
     public class StatisticsController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;

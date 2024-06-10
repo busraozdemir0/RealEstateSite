@@ -10,18 +10,18 @@
                     <div class="col-lg-4 col-md-6 mt-md-0 mt-sm-4">
                         <div class="grids5-info">
                             <span class="posted-date">
-                                <a href="#blog-single">
+                                <a href="/Property/PropertySingle/@item.ProductID">
                                     <span class="small">@item.AdvertisementDate.ToString("yyyy")</span>
                                     <span class="big">@item.AdvertisementDate.ToString("dd")</span>
                                     <span class="small">@item.AdvertisementDate.ToString("MMMMMM")</span>
                                 </a>
                             </span>
-                            <a href="#blog-single" class="d-block zoom">
+                            <a href="/Property/PropertySingle/@item.ProductID" class="d-block zoom">
                                 <img src="@item.CoverImage" alt="" style="height:250px;" class="img-fluid news-image" />
                             </a>
                             <div class="blog-info">
-                                <a href="#category" class="category">@item.CategoryName</a>
-                                <h4><a href="#blog-single">@item.Title</a></h4>
+                                <a href="/Property/PropertySingle/@item.ProductID" class="category">@item.CategoryName</a>
+                                <h4><a href="/Property/PropertySingle/@item.ProductID">@item.Title</a></h4>
                                 @if (item.Description.Length < 100)
                                 {
                                     <p>@item.Description</p>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -8,6 +9,7 @@ using RealEstate.UI.Models;
 
 namespace RealEstate.UI.Controllers
 {
+    [Authorize]
     public class ProductController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
