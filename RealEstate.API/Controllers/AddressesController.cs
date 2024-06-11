@@ -30,6 +30,6 @@ namespace RealEstate.API.Controllers
             await _addressRepository.UpdateAddress(updateAddressDto);
             return Ok("Adres bilgileri başarılı bir şekilde güncellendi.");
         }
-      
+
     }
 }

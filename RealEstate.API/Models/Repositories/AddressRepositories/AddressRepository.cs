@@ -19,7 +19,7 @@ namespace RealEstate.API.Models.Repositories.AddressRepositories
             parameters.Add("@addressID", addressId);
             using (var connection = _context.CreateConnection())
             {
-                var value = await connection.QueryFirstOrDefaultAsync<GetByIDAddressDto>(query, parameters);
+                var value = await connection.QueryFirstOrDefaultAsync<GetByIDAddressDto>(query,parameters);
                 return value;
             }
         }

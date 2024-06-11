@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using RealEstate.UI.DTOs.AddressDtos;
 using RealEstate.UI.DTOs.ContactDtos;
 using RealEstate.UI.Models;
 using System.Text;
@@ -22,6 +23,16 @@ namespace RealEstate.UI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.GetAsync("Addresses/1");
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var jsonData = await responseMessage.Content.ReadAsStringAsync();
+                var values = JsonConvert.DeserializeObject<GetByIDAddressDto>(jsonData);
+
+                ViewBag.locationMap = values.Location;
+            }
             return View();
         }
 

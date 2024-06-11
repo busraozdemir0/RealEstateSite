@@ -1,0 +1,40 @@
+﻿@model UpdateAddressDto
+@{
+    ViewData["Title"] = "UpdateAddress";
+    Layout = "~/Views/Admin/Index.cshtml";
+}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-light rounded h-100 p-4">
+                <h6 class="mb-4">Adres Bilgileri Güncelleme Sayfası</h6>
+                <form method="post">
+                    <input type="hidden" asp-for="AddressID" />
+                    <label>Adres Başlığı - 1</label>
+                    <input type="text" asp-for="AddressTitle1" class="form-control" />
+                    <br />
+                    <label>Açıklama</label>
+                    <input type="text" asp-for="Description" class="form-control" />
+                    <br />
+                    <label>Adres Başlığı - 2</label>
+                    <input type="text" asp-for="AddressTitle2" class="form-control" />
+                    <br />
+                    <label>Telefon - 1</label>
+                    <input type="tel" asp-for="Phone1" class="form-control" />
+                    <br />
+                    <label>Telefon - 2</label>
+                    <input type="tel" asp-for="Phone2" class="form-control" />
+                    <br />
+                    <label>E-Mail</label>
+                    <input type="email" asp-for="Email" class="form-control" />
+                    <br />
+                    <label>Konum</label>
+                    <textarea asp-for="Location" class="form-control" rows="5"></textarea>
+                    <br />
+                    <button class="btn btn-success">Bilgileri Güncelle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

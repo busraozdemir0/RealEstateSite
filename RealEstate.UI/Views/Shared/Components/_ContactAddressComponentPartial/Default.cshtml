@@ -1,0 +1,26 @@
+﻿@model GetByIDAddressDto
+
+<div class="col-lg-4 cont-details">
+    <address>
+        <h5 class="">@Model.AddressTitle1</h5>
+        <p>
+            <span class="fa fa-map-marker"></span>@Model.Description
+        </p>
+
+        <h5 class="mt-4 pt-lg-3">@Model.AddressTitle2</h5>
+        <p>
+            <span class="fa fa-mobile"></span> <strong>Telefon 1:</strong>
+            <a href="tel:@Model.Phone1"> @Model.Phone1</a>
+        </p>
+
+        <p>
+            <span class="fa fa-phone"></span> <strong>Telefon 2 :</strong>
+            <a href="tel:@Model.Phone2"> @Model.Phone2</a>
+        </p>
+
+        <p>
+            <span class="fa fa-envelope"></span> <strong>E-Mail :</strong>
+            <a href="mailto:@Model.Email"> @Model.Email</a>
+        </p>
+    </address>
+</div>

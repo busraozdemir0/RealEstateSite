@@ -48,7 +48,7 @@ namespace RealEstate.API.Models.Repositories.CategoryRepository
             }
         }
 
-        public async Task UpdateCategory(UpdateAddressDto updateCategoryDto)
+        public async Task UpdateCategory(UpdateCategoryDto updateCategoryDto)
         {
             string query = "Update Category Set CategoryName=@categoryName, CategoryStatus=@categoryStatus where CategoryID=@categoryID";
             var parameters = new DynamicParameters();

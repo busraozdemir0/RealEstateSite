@@ -44,36 +44,12 @@
                             </form>
                         </div>
                     </div>
-                    <div class="col-lg-4 cont-details">
-                        <address>
-                            <h5 class="">Merkez Ofis</h5>
-                            <p>
-                                <span class="fa fa-map-marker"></span>Estate sale office, 32, My Street, Kingston,
-                                New York 12401.
-                            </p>
-
-                            <h5 class="mt-4 pt-lg-3">Telefon Bilgileri</h5>
-                            <p>
-                                <span class="fa fa-mobile"></span> <strong>Telefon 1:</strong>
-                                <a href="tel:+1(12) 366 411 4999"> (+1) 366 411 499</a>
-                            </p>
-
-                            <p>
-                                <span class="fa fa-phone"></span> <strong>Telefon 2 :</strong>
-                                <a href="tel:+1(12) 366 411 4999"> (+1) 366 411 499</a>
-                            </p>
-
-                            <p>
-                                <span class="fa fa-envelope"></span> <strong>E-Mail :</strong>
-                                <a href="mailto:mail@example.com"> mail@example.com</a>
-                            </p>
-                        </address>
-                    </div>
+                    @await Component.InvokeAsync("_ContactAddressComponentPartial")
                 </div>
             </div>
         </div>
         <div class="map mt-5">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387190.2895687731!2d-74.26055986835598!3d40.697668402590374!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew+York%2C+NY%2C+USA!5e0!3m2!1sen!2sin!4v1562582305883!5m2!1sen!2sin"
+            <iframe src="@ViewBag.locationMap"
                     frameborder="0" style="border:0" allowfullscreen=""></iframe>
         </div>
     </div>

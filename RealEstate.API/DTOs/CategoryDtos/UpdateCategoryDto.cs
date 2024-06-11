@@ -1,6 +1,6 @@
 ﻿namespace RealEstate.API.DTOs.CategoryDtos
 {
-    public class UpdateAddressDto
+    public class UpdateCategoryDto
     {
         public int CategoryID { get; set; }
         public string CategoryName { get; set; }

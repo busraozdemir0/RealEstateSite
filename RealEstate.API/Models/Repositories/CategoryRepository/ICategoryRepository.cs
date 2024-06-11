@@ -7,7 +7,7 @@ namespace RealEstate.API.Models.Repositories.CategoryRepository
         Task<List<ResultCategoryDto>> GetAllCategory();
         Task CreateCategory(CreateCategoryDto createCategoryDto);
         Task DeleteCategory(int categoryId);
-        Task UpdateCategory(UpdateAddressDto updateCategoryDto);
+        Task UpdateCategory(UpdateCategoryDto updateCategoryDto);
         Task<GetByIDAddressDto> GetCategory(int categoryId);
     }
 }
