@@ -44,5 +44,11 @@ namespace RealEstate.API.Controllers
                 }
             }
         }
+
+        [HttpPost("Logout")]
+        public IActionResult Logout()
+        {
+            return Ok(new { message = "Başarıyla çıkış yapıldı." });
+        }
     }
 }

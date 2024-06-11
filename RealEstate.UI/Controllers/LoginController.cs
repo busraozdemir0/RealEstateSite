@@ -65,5 +65,17 @@ namespace RealEstate.UI.Controllers
             }
             return View();
         }
+
+        public async Task<IActionResult> Logout()
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var response = await client.PostAsync("Login/Logout", null);
+            if (response.IsSuccessStatusCode)
+            {
+                await HttpContext.SignOutAsync(JwtBearerDefaults.AuthenticationScheme);
+            }
+            return RedirectToAction("Index", "Default");
+        }
     }
 }
