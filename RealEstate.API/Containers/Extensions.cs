@@ -1,10 +1,10 @@
 ﻿using RealEstate.API.Models.DapperContext;
 using RealEstate.API.Models.Repositories.AddressRepositories;
+using RealEstate.API.Models.Repositories.AppRoleRepositories;
 using RealEstate.API.Models.Repositories.AppUserRepositories;
 using RealEstate.API.Models.Repositories.BottomGridRepositories;
 using RealEstate.API.Models.Repositories.CategoryRepository;
 using RealEstate.API.Models.Repositories.ContactRepositories;
-using RealEstate.API.Models.Repositories.EmployeeRepositories;
 using RealEstate.API.Models.Repositories.EstateAgentRepositories.DashboardRepositories.ChartRepositories;
 using RealEstate.API.Models.Repositories.EstateAgentRepositories.DashboardRepositories.LastProductRepositories;
 using RealEstate.API.Models.Repositories.EstateAgentRepositories.DashboardRepositories.StatisticRepositories;
@@ -35,7 +35,6 @@ namespace RealEstate.API.Containers
             services.AddTransient<IBottomGridRepository, BottomGridRepository>();
             services.AddTransient<IPopularLocationRepository, PopularLocationRepository>();
             services.AddTransient<ITestimonialRepository, TestimonialRepository>();
-            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
             services.AddTransient<IStatisticsRepository, StatisticsRepository>();
             services.AddTransient<IContactRepository, ContactRepository>();
             services.AddTransient<IToDoListRepository, ToDoListRepository>();
@@ -48,6 +47,7 @@ namespace RealEstate.API.Containers
             services.AddTransient<IPropertyAmenityRepository, PropertyAmenityRepository>();
             services.AddTransient<ISubFeatureRepository, SubFeatureRepository>();
             services.AddTransient<IAddressRepository, AddressRepository>();
+            services.AddTransient<IAppRoleRepository, AppRoleRepository>();
         }
     }
 }

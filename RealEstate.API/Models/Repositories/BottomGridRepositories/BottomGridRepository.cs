@@ -43,7 +43,7 @@ namespace RealEstate.API.Models.Repositories.BottomGridRepositories
             string query = "Select * From BottomGrid";
             using (var connection = _context.CreateConnection())
             {
-                var values = await connection.QueryAsync<ResultBottomGridDto>(query); // Kategorileri DTO yadimiyla listeleme
+                var values = await connection.QueryAsync<ResultBottomGridDto>(query);
                 return values.ToList();
             }
         }

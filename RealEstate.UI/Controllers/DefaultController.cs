@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RealEstate.UI.DTOs.CategoryDtos;
 using RealEstate.UI.Models;
+using System.Text;
 
 namespace RealEstate.UI.Controllers
 {

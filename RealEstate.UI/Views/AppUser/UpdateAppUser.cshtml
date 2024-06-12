@@ -1,0 +1,40 @@
+﻿@model UpdateAppUserDto
+@{
+    ViewData["Title"] = "UpdateAppUser";
+    Layout = "~/Views/Admin/Index.cshtml";
+}
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-light rounded h-100 p-4">
+                <h6 class="mb-4">Kullanıcı Güncelleme Sayfası</h6>
+                <form method="post">
+                    <input type="hidden" asp-for="UserId" />
+
+                    <label>Adı</label>
+                    <input type="text" asp-for="Name" class="form-control" />
+                    <br />
+                    <label>Kullanıcı Adı</label>
+                    <input type="text" asp-for="UserName" class="form-control" />
+                    <br />
+                    <label>Şifresi</label>
+                    <input type="text" asp-for="Password" class="form-control" />
+                    <br />
+                    <label>Kullanıcının Rolü</label>
+                    @Html.DropDownListFor(x => x.UserRole, (IEnumerable<SelectListItem>)ViewBag.roles, new { @class = "form-control" })
+                    <br />
+                    <label>E-Mail</label>
+                    <input type="email" asp-for="Email" class="form-control" />
+                    <br />
+                    <label>Telefon Numarası</label>
+                    <input type="tel" asp-for="PhoneNumber" class="form-control" />
+                    <br />
+                    <label>Görsel Url</label>
+                    <input type="text" asp-for="UserImageUrl" class="form-control" />
+                    <br />
+                    <button class="btn btn-primary">Kullanıcıyı Güncelle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

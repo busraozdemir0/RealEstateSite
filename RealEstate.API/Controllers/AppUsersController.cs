@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RealEstate.API.DTOs.AppUserDtos;
 using RealEstate.API.Models.Repositories.AppUserRepositories;
 
 namespace RealEstate.API.Controllers
@@ -19,6 +20,41 @@ namespace RealEstate.API.Controllers
         public async Task<IActionResult> GetAppUserByProductId(int id)
         {
             var value = await _appUserRepository.GetAppUserByProductId(id);
+            return Ok(value);
+        }
+
+        [HttpGet("AppUserList")]
+        public async Task<IActionResult> AppUserList()
+        {
+            var values = await _appUserRepository.GetAllAppUser();
+            return Ok(values);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateAppUser(CreateAppUserDto createAppUserDto)
+        {
+            await _appUserRepository.CreateAppUser(createAppUserDto);
+            return Ok("Kullanıcı başarılı bir şekilde eklendi.");
+        }
+
+        [HttpDelete("{appUserId}")] // Silme islemi
+        public async Task<IActionResult> DeleteAppUser(int appUserId)
+        {
+            await _appUserRepository.DeleteAppUser(appUserId);
+            return Ok("Kullanıcı başarılı bir şekilde silindi.");
+        }
+
+        [HttpPut] // Guncelleme islemi
+        public async Task<IActionResult> UpdateAppUser(UpdateAppUserDto updateAppUserDto)
+        {
+            await _appUserRepository.UpdateAppUser(updateAppUserDto);
+            return Ok("Kullanıcı başarılı bir şekilde güncellendi.");
+        }
+
+        [HttpGet("{appUserId}")]
+        public async Task<IActionResult> GetAppUser(int appUserId)
+        {
+            var value = await _appUserRepository.GetAppUser(appUserId);
             return Ok(value);
         }
     }

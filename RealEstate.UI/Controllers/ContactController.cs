@@ -31,7 +31,7 @@ namespace RealEstate.UI.Controllers
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
                 var values = JsonConvert.DeserializeObject<GetByIDAddressDto>(jsonData);
 
-                ViewBag.locationMap = values.Location;
+                ViewBag.locationMap = values.Location; // harita konum bilgisini view'a tasiyabilmek icin
             }
             return View();
         }
