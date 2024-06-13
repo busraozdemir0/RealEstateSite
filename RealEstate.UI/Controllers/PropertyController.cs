@@ -67,7 +67,7 @@ namespace RealEstate.UI.Controllers
             ViewBag.garageCount = values2.GarageSize;
             ViewBag.buildYear = values2.BuildYear;
             ViewBag.location = values2.Location;
-            ViewBag.videoUrl = values2.VideoUrl;
+            ViewBag.videoUrl = values2.Videourl;
             
             
             DateTime date1 = DateTime.Now; // Simdiki zaman

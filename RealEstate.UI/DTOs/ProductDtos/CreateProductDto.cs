@@ -14,6 +14,6 @@
         public DateTime AdvertisementDate { get; set; }
         public bool ProductStatus { get; set; }
         public int ProductCategory { get; set; }
-        public int EmployeeID { get; set; }
+        public int AppUserId { get; set; }
     }
 }

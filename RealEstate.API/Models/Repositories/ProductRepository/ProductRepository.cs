@@ -135,18 +135,7 @@ namespace RealEstate.API.Models.Repositories.ProductRepository
             }
         }
 
-        public async Task<GetProductDetailByIdDto> GetProductDetailByProductId(int id)
-        {
-            // Gelen id'ye gore ilan detaylarini getirme
-            string query = "Select * From ProductDetails Where ProductID=@productId";
-            var parameters = new DynamicParameters();
-            parameters.Add("@productID", id);
-            using (var connection = _context.CreateConnection())
-            {
-                var value = await connection.QueryAsync<GetProductDetailByIdDto>(query, parameters);
-                return value.FirstOrDefault();
-            }
-        }
+        
 
         public async Task<List<ResultProductWithSearchListDto>> ResultProductWithSearchList(string searchKeyValue, int propertyCategoryId, string city)
         {

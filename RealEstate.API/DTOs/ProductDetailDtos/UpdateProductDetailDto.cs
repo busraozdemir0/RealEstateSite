@@ -1,6 +1,6 @@
 ﻿namespace RealEstate.API.DTOs.ProductDetailDtos
 {
-    public class GetProductDetailByIdDto
+    public class UpdateProductDetailDto
     {
         public int ProductDetailID { get; set; }
         public int BedRoomCount { get; set; }

@@ -1,0 +1,55 @@
+﻿@model CreateProductDetailDto
+
+@{
+    ViewData["Title"] = "AddProductDetail";
+    Layout = "~/Areas/EstateAgent/Views/LayoutEstateAgent/Index.cshtml";
+}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-light rounded h-100 p-4">
+                <h6 class="mb-4">İlan Detayları Ekleme / Güncelleme Sayfası</h6>
+                <a href="/EstateAgent/MyAdverts/ActiveAdverts/" class="mt-2 mb-2 btn btn-primary"> <i class="fa fa-arrow-left"></i> Geri</a>
+                <form method="post">
+
+                    @if (Model.ProductDetailID is not null) @* Eger ilgili ilana ait onceden detay eklenmisse guncelleme islemi yapilacagi icin ProductDetailID bilgisi null olmayacaktir. Bu sebeple buradan kontrol sagliyoruz *@
+                    {
+                        <input type="hidden" asp-for="ProductDetailID" value="@Model.ProductDetailID" />
+                    }
+
+                    <input type="hidden" asp-for="ProductID" value="@ViewBag.productId" />
+
+                    <label>Ürün Boyutu (metrekare cinsinden)</label>
+                    <input type="text" asp-for="ProductSize" class="form-control" />
+                    <br />
+                    <label>Yatak Odası Sayısı</label>
+                    <input type="number" asp-for="BedRoomCount" class="form-control" />
+                    <br />
+                    <label>Banyo Sayısı</label>
+                    <input type="number" asp-for="BathCount" class="form-control" />
+                    <br />
+                    <label>Oda Sayısı</label>
+                    <input type="number" asp-for="RoomCount" class="form-control" />
+                    <br />
+                    <label>Garaj Sayısı</label>
+                    <input type="number" asp-for="GarageSize" class="form-control" />
+                    <br />
+                    <label>İnşa Yılı</label>
+                    <input type="text" asp-for="BuildYear" class="form-control" />
+                    <br />
+                    <label>Fiyat</label>
+                    <input type="text" asp-for="Price" class="form-control" />
+                    <br />
+                    <label>Konum Bilgisi (Haritalar kısmında Paylaş yaparak kopyalayın)</label>
+                    <textarea asp-for="Location" class="form-control" rows="5"></textarea>
+                    <br />
+                    <label>Youtube Videosu Entegre Edin</label>
+                    <textarea asp-for="Videourl" class="form-control" rows="5"></textarea>
+                    <br />
+                    <button type="submit" class="btn btn-primary">İlan Detaylarını Kaydet</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RealEstate.UI.DTOs.CategoryDtos;
+using RealEstate.UI.DTOs.ProductDetailDtos;
 using RealEstate.UI.DTOs.ProductDtos;
 using RealEstate.UI.Models;
 using RealEstate.UI.Services;
@@ -35,6 +36,7 @@ namespace RealEstate.UI.Areas.EstateAgent.Controllers
                 var jsonData = await responseMessage.Content.ReadAsStringAsync(); 
                 var values = JsonConvert.DeserializeObject<List<ResultProductAdvertListWithCategoryByEmployeeDto>>(jsonData);   // DeserializeObject => json bir degeri okuyor ve bizim istedigimiz metin formatina donusturur
                                                                                                                                 // SerializeObject => metin formatini json formatina donusturur.
+
                 return View(values);
             }
             return View();
@@ -86,7 +88,7 @@ namespace RealEstate.UI.Areas.EstateAgent.Controllers
             createProductDto.ProductStatus = true;
 
             var id = _loginService.GetUserId;
-            createProductDto.EmployeeID = int.Parse(id);
+            createProductDto.AppUserId = int.Parse(id);
 
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(createProductDto); 
@@ -95,9 +97,88 @@ namespace RealEstate.UI.Areas.EstateAgent.Controllers
             var responseMessage = await client.PostAsync("Products", stringContent);
             if (responseMessage.IsSuccessStatusCode)
             {
-                return RedirectToAction("ActiveAdverts","MyAdverts");
+                return Redirect("/EstateAgent/MyAdverts/ActiveAdverts/");
             }
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AddProductDetail(int id)
+        {
+            ViewBag.productId = id;
+
+            // İlana ait onceden detay tablosuna kayit eklenmis mi diye bakiliyor
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.GetAsync("ProductDetails/GetProductDetailByProductId?id=" + id);
+            var jsonData = await responseMessage.Content.ReadAsStringAsync();
+            var values = JsonConvert.DeserializeObject<GetProductDetailByIdDto>(jsonData);
+
+            // Eklenmisse yani deger null degilse veriler modele aktariliyor.
+            if (values != null)
+            {
+                var model = new CreateProductDetailDto
+                {
+                    ProductDetailID = values.ProductDetailID,
+                    ProductID = values.ProductID,
+                    ProductSize = values.ProductSize,
+                    BedRoomCount = values.BedRoomCount,
+                    BathCount = values.BathCount,
+                    RoomCount = values.RoomCount,
+                    GarageSize = values.GarageSize,
+                    BuildYear = values.BuildYear,
+                    Price = values.Price,
+                    Location = values.Location,
+                    Videourl = values.Videourl
+                };
+                return View(model);
+            }
+
+            // Eger onceden detay tablosuna o ilanla ilgili veri eklenmemisse modelde sadece ProductID bilgisi doldurularak donduruluyor.
+            var emptyModel = new CreateProductDetailDto
+            {
+                ProductID = id
+            };
+            return View(emptyModel);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddProductDetail(CreateProductDetailDto createProductDetailDto)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+
+            var responseMessage = await client.GetAsync("ProductDetails/GetProductDetailByProductId?id=" + createProductDetailDto.ProductID);
+            var jsonData = await responseMessage.Content.ReadAsStringAsync();
+            var existingDetail = JsonConvert.DeserializeObject<GetProductDetailByIdDto>(jsonData);
+
+            if (existingDetail != null) // Eger o ilana ait detay onceden eklenmisse guncelleme islemi yapilacak.
+            {
+                // Guncelleme islemi
+                var updateJsonData = JsonConvert.SerializeObject(createProductDetailDto);
+                StringContent updateStringContent = new StringContent(updateJsonData, Encoding.UTF8, "application/json");
+                var updateResponseMessage = await client.PutAsync("ProductDetails", updateStringContent);
+
+                if (updateResponseMessage.IsSuccessStatusCode)
+                {
+                    return Redirect("/EstateAgent/MyAdverts/ActiveAdverts/");
+                }
+            }
+            else // Eger o ilana ait detay onceden hic eklenmemisse ekleme islemi yapilacak.
+            {
+                // Ekleme islemi
+                var addJsonData = JsonConvert.SerializeObject(createProductDetailDto);
+                StringContent addStringContent = new StringContent(addJsonData, Encoding.UTF8, "application/json");
+                var addResponseMessage = await client.PostAsync("ProductDetails", addStringContent);
+
+                if (addResponseMessage.IsSuccessStatusCode)
+                {
+                    return Redirect("/EstateAgent/MyAdverts/ActiveAdverts/");
+                }
+            }
+
+            return View(createProductDetailDto);
         }
     }
 }

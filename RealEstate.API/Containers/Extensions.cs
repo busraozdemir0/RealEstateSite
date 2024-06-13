@@ -10,6 +10,7 @@ using RealEstate.API.Models.Repositories.EstateAgentRepositories.DashboardReposi
 using RealEstate.API.Models.Repositories.EstateAgentRepositories.DashboardRepositories.StatisticRepositories;
 using RealEstate.API.Models.Repositories.MessageRepositories;
 using RealEstate.API.Models.Repositories.PopularLocationRepositories;
+using RealEstate.API.Models.Repositories.ProductDetailRepositories;
 using RealEstate.API.Models.Repositories.ProductImageRepositories;
 using RealEstate.API.Models.Repositories.ProductRepository;
 using RealEstate.API.Models.Repositories.PropertyAmenityRepositories;
@@ -48,6 +49,7 @@ namespace RealEstate.API.Containers
             services.AddTransient<ISubFeatureRepository, SubFeatureRepository>();
             services.AddTransient<IAddressRepository, AddressRepository>();
             services.AddTransient<IAppRoleRepository, AppRoleRepository>();
+            services.AddTransient<IProductDetailRepository, ProductDetailRepository>();
         }
     }
 }
