@@ -5,7 +5,6 @@ using Microsoft.Extensions.Options;
 using RealEstate.UI.DTOs.LoginDtos;
 using RealEstate.UI.Models;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
@@ -37,30 +36,36 @@ namespace RealEstate.UI.Controllers
             var response = await client.PostAsync("Login", content);
             if (response.IsSuccessStatusCode)
             {
-                var jsonData = await response.Content.ReadAsStringAsync();
-                var tokenModel = JsonSerializer.Deserialize<JwtResponseModel>(jsonData, new JsonSerializerOptions
+                try
                 {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                });
-
-                if (tokenModel != null)
-                {
-                    JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
-                    var token = handler.ReadJwtToken(tokenModel.Token);
-                    var claims = token.Claims.ToList();
-
-                    if (tokenModel.Token != null)
+                    var jsonData = await response.Content.ReadAsStringAsync();
+                    var tokenModel = JsonSerializer.Deserialize<JwtResponseModel>(jsonData, new JsonSerializerOptions
                     {
-                        claims.Add(new Claim("realestatetoken", tokenModel.Token));
+                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                    });
+
+                    if (tokenModel != null && tokenModel.Token != null && !string.IsNullOrEmpty(tokenModel.Token.Token))
+                    {
+                        JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
+                        var token = handler.ReadJwtToken(tokenModel.Token.Token);
+                        var claims = token.Claims.ToList();
+
+                        claims.Add(new Claim("realestatetoken", tokenModel.Token.Token));
                         var claimsIdentity = new ClaimsIdentity(claims, JwtBearerDefaults.AuthenticationScheme);
                         var authProps = new AuthenticationProperties
                         {
-                            ExpiresUtc = tokenModel.ExpiredDate,
+                            ExpiresUtc = tokenModel.Token.ExpiredDate,
                             IsPersistent = true
                         };
                         await HttpContext.SignInAsync(JwtBearerDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProps);
-                        return RedirectToAction("Index", "Dashboard", new { Area = "EstateAgent" });
+
+                        return Redirect(tokenModel.RedirectUrl);
                     }
+                }
+                catch (JsonException ex)
+                {
+                    Console.WriteLine($"JSON Deserialization Error: {ex.Message}");
+                    throw;
                 }
             }
             return View();

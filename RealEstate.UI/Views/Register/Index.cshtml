@@ -1,4 +1,4 @@
-﻿@model CreateLoginDto
+﻿@model CreateAppUserDto
 @{
     Layout = null;
 }
@@ -53,9 +53,13 @@
                             <a href="index.html" class="">
                                 <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>Real Estate</h3>
                             </a>
-                            <h3>Giriş</h3>
+                            <h3>Kayıt Ol</h3>
                         </div>
                         <form method="post">
+                            <div class="form-floating mb-3">
+                                <input type="text" asp-for="Name" class="form-control" id="floatingInput" placeholder="Adınız" />
+                                <label for="floatingInput">Adınız</label>
+                            </div>
                             <div class="form-floating mb-3">
                                 <input type="text" asp-for="UserName" class="form-control" id="floatingInput" placeholder="Kullanıcı Adınız" />
                                 <label for="floatingInput">Kullanıcı Adınız</label>
@@ -64,16 +68,22 @@
                                 <input type="password" asp-for="Password" class="form-control" id="floatingPassword" placeholder="Şifreniz" />
                                 <label for="floatingPassword">Şifreniz</label>
                             </div>
-                            <div class="d-flex align-items-center justify-content-between mb-4">
+                            <div class="form-floating mb-3">
+                                <input type="email" asp-for="Email" class="form-control" id="floatingInput" placeholder="E-Mail" />
+                                <label for="floatingInput">E-Mail</label>
+                            </div>
+                             <div class="form-floating mb-3">
+                                <input type="text" asp-for="PhoneNumber" class="form-control" id="floatingInput" placeholder="Telefon Numarası" />
+                                <label for="floatingInput">Telefon Numarası</label>
+                            </div>
+                       @*      <div class="d-flex align-items-center justify-content-between mb-4">
                                 <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="exampleCheck1">
                                     <label class="form-check-label" for="exampleCheck1">Beni Hatırla</label>
                                 </div>
-                                <a href="#">Şifremi Unuttum</a>
-                            </div>
-                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Giriş Yap</button>
+                            </div> *@
+                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Kayıt Ol</button>
                         </form>
-                        <p class="text-center mb-0">Bir hesabınız yok mu? <a href="/Register/Index/">Kayıt Ol</a></p>
                     </div>
                 </div>
             </div>
