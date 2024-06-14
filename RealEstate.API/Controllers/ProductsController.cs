@@ -101,5 +101,26 @@ namespace RealEstate.API.Controllers
             var values = await _productRepository.GetOptimalPrice3ProductAsync();
             return Ok(values);
         }
+
+        [HttpDelete("{productId}")]
+        public async Task<IActionResult> DeleteProduct(int productId)
+        {
+            await _productRepository.DeleteProduct(productId);
+            return Ok("İlan başarılı bir şekilde silindi.");
+        }
+
+        [HttpGet("GetProductById")]
+        public async Task<IActionResult> GetProductById(int productId)
+        {
+            var values = await _productRepository.GetProductById(productId);
+            return Ok(values);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateProduct(UpdateProductDto updateProductDto)
+        {
+            await _productRepository.UpdateProduct(updateProductDto);
+            return Ok("İlan başarılı bir şekilde güncellendi.");
+        }
     }
 }

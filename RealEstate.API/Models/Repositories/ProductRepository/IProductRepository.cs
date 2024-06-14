@@ -1,5 +1,4 @@
-﻿using RealEstate.API.DTOs.ProductDetailDtos;
-using RealEstate.API.DTOs.ProductDtos;
+﻿using RealEstate.API.DTOs.ProductDtos;
 
 namespace RealEstate.API.Models.Repositories.ProductRepository
 {
@@ -17,6 +16,8 @@ namespace RealEstate.API.Models.Repositories.ProductRepository
         Task<GetProductByProductIdDto> GetProductByProductId(int id); // id'ye gore ilani getirecek
         Task<List<ResultProductWithSearchListDto>> ResultProductWithSearchList(string searchKeyValue, int propertyCategoryId, string city); // Ana sayfada yer alan filtreleme islemi icin calisacak
         Task<List<ResultProductWithCategoryDto>> GetProductByDealOfTheDayTrueWithCategoryAsync(); // Urunleri kategori adlariyla birlikte ve gunun firsati olanlari getirecek olan metod
-
+        Task DeleteProduct(int productId);
+        Task<GetProductByIdDto> GetProductById(int id); // id'ye gore ilani getirecek (user Id bilgisi ile)
+        Task UpdateProduct(UpdateProductDto updateProductDto);
     }
 }

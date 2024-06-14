@@ -171,5 +171,65 @@ namespace RealEstate.API.Models.Repositories.ProductRepository
                 return values.ToList();
             }
         }
+
+        public async Task DeleteProduct(int productId)
+        {
+            string queryProductDetails = "Delete From ProductDetails Where ProductID=@productId"; // Oncelikle ProductDetails tablosunda yer alan productId bilgisine esit olan kayit silinecek.
+            var parameters = new DynamicParameters();
+            parameters.Add("@productId", productId);
+
+            using (var connection = _context.CreateConnection())
+            {
+                await connection.ExecuteAsync(queryProductDetails, parameters);
+            }
+
+            string queryProduct = "Delete From Product Where ProductID=@productId"; // Ardindan Product tablosunda productId'ye esti olan ilgili ilan silinecek. (ilk Product tablosundan silme yapildiginda conflict hatasi veriyor.)
+            var parameters2 = new DynamicParameters();
+            parameters2.Add("@productId", productId);
+
+            using (var connection = _context.CreateConnection())
+            {
+                await connection.ExecuteAsync(queryProduct, parameters2);
+               
+            }
+        }
+
+        public async Task UpdateProduct(UpdateProductDto updateProductDto)
+        {
+            string query = "Update Product set Title=@title, Price=@price, City=@city, District=@district, CoverImage=@coverImage, Address=@address, Description=@description, Type=@type, DealOfTheDay=@dealOfTheDay, AdvertisementDate=@advertisementDate, ProductStatus=@productStatus, ProductCategory=@productCategory, AppUserId=@userId where ProductID=@productId";
+            var parameters = new DynamicParameters();
+            parameters.Add("@title", updateProductDto.Title);
+            parameters.Add("@price", updateProductDto.Price);
+            parameters.Add("@city", updateProductDto.City);
+            parameters.Add("@district", updateProductDto.District);
+            parameters.Add("@coverImage", updateProductDto.CoverImage);
+            parameters.Add("@address", updateProductDto.Address);
+            parameters.Add("@description", updateProductDto.Description);
+            parameters.Add("@type", updateProductDto.Type);
+            parameters.Add("@dealOfTheDay", updateProductDto.DealOfTheDay);
+            parameters.Add("@advertisementDate", updateProductDto.AdvertisementDate);
+            parameters.Add("@productStatus", updateProductDto.ProductStatus);
+            parameters.Add("@productCategory", updateProductDto.ProductCategory);
+            parameters.Add("@userId", updateProductDto.AppUserId);
+            parameters.Add("@productId", updateProductDto.ProductID);
+
+            using (var connection = _context.CreateConnection())
+            {
+                await connection.ExecuteAsync(query, parameters);
+            }
+        }
+
+        public async Task<GetProductByIdDto> GetProductById(int productId)
+        {
+            // Gelen id'ye gore ilanin tum bilgilerini getirme (UserId dahil)
+            string query = "Select ProductID, Title, Price, City, District, CoverImage, Address, Description, Type, DealOfTheDay, AdvertisementDate, ProductStatus, ProductCategory, AppUserId From Product inner join Category on Product.ProductCategory=Category.CategoryID where ProductID=@productID";
+            var parameters = new DynamicParameters();
+            parameters.Add("@productID", productId);
+            using (var connection = _context.CreateConnection())
+            {
+                var value = await connection.QueryAsync<GetProductByIdDto>(query, parameters);
+                return value.FirstOrDefault();
+            }
+        }
     }
 }

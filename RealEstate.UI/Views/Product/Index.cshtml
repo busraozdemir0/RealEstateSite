@@ -22,6 +22,7 @@
                                 <th scope="col">Kategori</th>
                                 <th scope="col">Fiyat</th>
                                 <th scope="col">Tür</th>
+                                <th scope="col">Detay Ekle</th>
                                 <th scope="col">Sil</th>
                                 <th scope="col">Güncelle</th>
                                 <th scope="col">Sitede Gör</th>
@@ -40,9 +41,10 @@
                                     <td>@item.categoryName</td>
                                     <td>@item.price</td>
                                     <td>@item.type</td>
-                                    <td><a data-id="@item.productID" asp-controller="Product" asp-action="DeleteProduct" asp-route-productId="@item.productID" class="btn btn-outline-danger">Sil</a></td>
-                                    <td><a data-id="@item.productID" asp-controller="Product" asp-action="UpdateProduct" asp-route-productId="@item.productID" class="btn btn-outline-success">Güncelle</a></td>
-                                    <td><a data-id="@item.productID" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@item.productID" class="btn btn-outline-primary">Sitede Gör</a></td>
+                                    <td><a href="/Product/AddProductDetail/@item.productID" class="btn btn-outline-warning">Detay Ekle</a></td>
+                                    <td><a data-id="@item.productID" asp-controller="Product" asp-action="DeleteProduct" asp-route-id="@item.productID" class="btn btn-outline-danger">Sil</a></td>
+                                    <td><a data-id="@item.productID" asp-controller="Product" asp-action="UpdateProduct" asp-route-id="@item.productID" class="btn btn-outline-success">Güncelle</a></td>
+                                    <td><a data-id="@item.productID" asp-controller="Property" asp-action="PropertySingle" asp-route-id="@item.productID" class="btn btn-outline-primary">Sitede Gör</a></td>
                                     <td>
                                         @if (item.dealOfTheDay)
                                         {

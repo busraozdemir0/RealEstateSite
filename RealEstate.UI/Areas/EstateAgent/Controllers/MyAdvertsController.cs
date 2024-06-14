@@ -27,13 +27,13 @@ namespace RealEstate.UI.Areas.EstateAgent.Controllers
         }
         public async Task<IActionResult> ActiveAdverts()
         {
-            var id= _loginService.GetUserId; // Giris yapan kullanicinin id bilgisi (Kullanicinin id'si ile kullanici kendi ekledigi ilanlarini gorebilecek)
+            var id = _loginService.GetUserId; // Giris yapan kullanicinin id bilgisi (Kullanicinin id'si ile kullanici kendi ekledigi ilanlarini gorebilecek)
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_apiSettings.BaseUrl);
             var responseMessage = await client.GetAsync("Products/GetProductAdvertListByEmployeeAsyncByTrue?id=" + id);
             if (responseMessage.IsSuccessStatusCode)
             {
-                var jsonData = await responseMessage.Content.ReadAsStringAsync(); 
+                var jsonData = await responseMessage.Content.ReadAsStringAsync();
                 var values = JsonConvert.DeserializeObject<List<ResultProductAdvertListWithCategoryByEmployeeDto>>(jsonData);   // DeserializeObject => json bir degeri okuyor ve bizim istedigimiz metin formatina donusturur
                                                                                                                                 // SerializeObject => metin formatini json formatina donusturur.
 
@@ -51,8 +51,8 @@ namespace RealEstate.UI.Areas.EstateAgent.Controllers
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<ResultProductAdvertListWithCategoryByEmployeeDto>>(jsonData);   
-                                                                                                                                
+                var values = JsonConvert.DeserializeObject<List<ResultProductAdvertListWithCategoryByEmployeeDto>>(jsonData);
+
                 return View(values);
             }
             return View();
@@ -91,7 +91,7 @@ namespace RealEstate.UI.Areas.EstateAgent.Controllers
             createProductDto.AppUserId = int.Parse(id);
 
             var client = _httpClientFactory.CreateClient();
-            var jsonData = JsonConvert.SerializeObject(createProductDto); 
+            var jsonData = JsonConvert.SerializeObject(createProductDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
             client.BaseAddress = new Uri(_apiSettings.BaseUrl);
             var responseMessage = await client.PostAsync("Products", stringContent);
@@ -179,6 +179,78 @@ namespace RealEstate.UI.Areas.EstateAgent.Controllers
             }
 
             return View(createProductDetailDto);
+        }
+
+        public async Task<IActionResult> DeleteAdvert(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.DeleteAsync($"Products/{id}"); 
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return Redirect("/EstateAgent/MyAdverts/ActiveAdverts/");
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateAdvert(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+
+            // İlan bilgilerini alma
+            var responseMessage = await client.GetAsync($"Products/GetProductById?productId={id}");
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var jsonData = await responseMessage.Content.ReadAsStringAsync();
+                var values = JsonConvert.DeserializeObject<UpdateProductDto>(jsonData);
+
+                // Kategorileri alma
+                var client2 = _httpClientFactory.CreateClient();
+                client2.BaseAddress = new Uri(_apiSettings.BaseUrl);
+                var responseMessage2 = await client2.GetAsync("Categories");
+                if (responseMessage2.IsSuccessStatusCode)
+                {
+                    var jsonData2 = await responseMessage2.Content.ReadAsStringAsync();
+                    var values2 = JsonConvert.DeserializeObject<List<ResultCategoryDto>>(jsonData2);
+
+                    List<SelectListItem> categoryValues = (from x in values2.ToList()
+                                                       select new SelectListItem
+                                                       {
+                                                           Text = x.CategoryName,
+                                                           Value = x.CategoryID.ToString()
+                                                       }).ToList();
+                    ViewBag.categories = categoryValues;
+                }
+
+                return View(values);
+            }
+
+            return View(); // Hata durumunda bos view dondur
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateAdvert(UpdateProductDto updateProductDto)
+        {
+            updateProductDto.DealOfTheDay = false;
+            updateProductDto.AdvertisementDate = DateTime.Now;
+            updateProductDto.ProductStatus = true;
+
+            var id = _loginService.GetUserId;
+            updateProductDto.AppUserId = int.Parse(id);
+
+            var client = _httpClientFactory.CreateClient();
+            var jsonData = JsonConvert.SerializeObject(updateProductDto);
+            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.PutAsync("Products", stringContent);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return Redirect("/EstateAgent/MyAdverts/ActiveAdverts/");
+            }
+
+            return View();
         }
     }
 }

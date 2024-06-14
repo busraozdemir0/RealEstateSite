@@ -1,6 +1,6 @@
-﻿@model CreateProductDto
+﻿@model UpdateProductDto
 @{
-    ViewData["Title"] = "CreateAdvert";
+    ViewData["Title"] = "UpdateAdvert";
     Layout = "~/Areas/EstateAgent/Views/LayoutEstateAgent/Index.cshtml";
 }
 
@@ -8,8 +8,9 @@
     <div class="row g-4">
         <div class="col-12">
             <div class="bg-light rounded h-100 p-4">
-                <h6 class="mb-4">Yeni İlan Ekleme Sayfası</h6>
+                <h6 class="mb-4">İlan Güncelleme Ekleme Sayfası</h6>
                 <form method="post">
+                    <input type="hidden" asp-for="ProductID" />
                     <label>İlan Başlığı</label>
                     <input type="text" asp-for="Title" class="form-control" />
                     <br />
@@ -20,7 +21,7 @@
                     <input type="text" asp-for="District" class="form-control" />
                     <br />
                     <label>Kategori</label>
-                    @Html.DropDownListFor(x => x.ProductCategory, (List<SelectListItem>)ViewBag.categories, new { @class = "form-control" })
+                    @Html.DropDownListFor(x => x.ProductCategory, (IEnumerable<SelectListItem>)ViewBag.categories, new { @class = "form-control" })
                     <br />
                     <label>Fiyat</label>
                     <input type="text" asp-for="Price" class="form-control" />
@@ -37,7 +38,7 @@
                     <label>İlan Açıklaması</label>
                     <textarea asp-for="Description" class="form-control" rows="5"></textarea>
                     <br />
-                    <button class="btn btn-primary">İlanı Oluştur</button>
+                    <button class="btn btn-primary">İlanı Kaydet</button>
                 </form>
             </div>
         </div>

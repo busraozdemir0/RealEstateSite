@@ -19,10 +19,10 @@
                                 <th scope="col">İlan Başlığı</th>
                                 <th scope="col">Kategori</th>
                                 <th scope="col">Fiyat</th>
-                                <th scope="col">Tür</th>
-                                <th scope="col">Sil</th>
+                                <th scope="col">Tür</th> 
                                 <th scope="col">Pasif Yap</th>
                                 <th scope="col">Detay Ekle</th>
+                                <th scope="col">Sil</th>
                                 <th scope="col">Güncelle</th>
                                 <th scope="col">Sitede Gör</th>
                             </tr>
@@ -37,10 +37,10 @@
                                     <td>@item.CategoryName</td>
                                     <td>@item.Price</td>
                                     <td>@item.Type</td>
-                                    <td><a href="/EstateAgent/MyAdverts/DeleteProduct/@item.ProductID" class="btn btn-outline-danger">Sil</a></td>
-                                    <td><a href="/EstateAgent/MyAdverts/DeleteProduct/@item.ProductID" class="btn btn-outline-secondary">Pasif Yap</a></td>
                                     <td><a href="/EstateAgent/MyAdverts/AddProductDetail/@item.ProductID" class="btn btn-outline-warning">Detay Ekle</a></td>
-                                    <td><a href="/EstateAgent/MyAdverts/UpdateProduct/@item.ProductID" class="btn btn-outline-success">Güncelle</a></td>
+                                    <td><a href="/EstateAgent/MyAdverts//@item.ProductID" class="btn btn-outline-secondary">Pasif Yap</a></td>
+                                    <td><a href="/EstateAgent/MyAdverts/DeleteAdvert/@item.ProductID" class="btn btn-outline-danger">Sil</a></td>
+                                    <td><a href="/EstateAgent/MyAdverts/UpdateAdvert/@item.ProductID" class="btn btn-outline-success">Güncelle</a></td>
                                     <td><a href="/Property/PropertySingle/@item.ProductID" class="btn btn-outline-primary">Sitede Gör</a></td>
                                 </tr>
                             }

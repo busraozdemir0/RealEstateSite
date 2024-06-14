@@ -19,7 +19,7 @@
                     <input type="text" asp-for="District" class="form-control" />
                     <br />
                     <label>Kategori</label>
-                    @Html.DropDownListFor(x => x.ProductCategory, (List<SelectListItem>)ViewBag.categories, new { @class = "form-control" })
+                    @Html.DropDownListFor(x => x.ProductCategory, (IEnumerable<SelectListItem>)ViewBag.categories, new { @class = "form-control" })
                     <br />
                     <label>Fiyat</label>
                     <input type="text" asp-for="Price" class="form-control" />
