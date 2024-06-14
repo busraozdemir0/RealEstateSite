@@ -9,6 +9,7 @@ using RealEstate.UI.DTOs.ProductDtos;
 using RealEstate.UI.Models;
 using RealEstate.UI.Services;
 using System.Text;
+using X.PagedList;
 
 namespace RealEstate.UI.Controllers
 {
@@ -25,7 +26,7 @@ namespace RealEstate.UI.Controllers
             _loginService = loginService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_apiSettings.BaseUrl);
@@ -34,7 +35,7 @@ namespace RealEstate.UI.Controllers
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
                 var values = JsonConvert.DeserializeObject<List<ResultProductDto>>(jsonData);
-                return View(values);
+                return View(values.ToPagedList(page, 10)); // Her sayfada en fazla 10 veri olsun
             }
             return View();
         }

@@ -1,4 +1,7 @@
-﻿@model List<ResultProductDto>
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+
+@model IPagedList<ResultProductDto>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_DefaultLayout.cshtml";
@@ -27,6 +30,13 @@
                     </div>
                     <br />
                 }
+            </div>
+            <div style="display: flex; justify-content: center; align-items: center;">
+                   @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions
+                   {
+                       LiElementClasses = new List<string>
+                        {"page-link"}
+                   })
             </div>
         </div>
     </div>

@@ -9,6 +9,7 @@ using RealEstate.UI.DTOs.ProductDtos;
 using RealEstate.UI.Models;
 using RealEstate.UI.Services;
 using System.Text;
+using X.PagedList;
 
 namespace RealEstate.UI.Areas.EstateAgent.Controllers
 {
@@ -25,7 +26,7 @@ namespace RealEstate.UI.Areas.EstateAgent.Controllers
             _loginService = loginService;
             _apiSettings = apiSettings.Value;
         }
-        public async Task<IActionResult> ActiveAdverts()
+        public async Task<IActionResult> ActiveAdverts(int page = 1)
         {
             var id = _loginService.GetUserId; // Giris yapan kullanicinin id bilgisi (Kullanicinin id'si ile kullanici kendi ekledigi ilanlarini gorebilecek)
             var client = _httpClientFactory.CreateClient();
@@ -37,12 +38,12 @@ namespace RealEstate.UI.Areas.EstateAgent.Controllers
                 var values = JsonConvert.DeserializeObject<List<ResultProductAdvertListWithCategoryByEmployeeDto>>(jsonData);   // DeserializeObject => json bir degeri okuyor ve bizim istedigimiz metin formatina donusturur
                                                                                                                                 // SerializeObject => metin formatini json formatina donusturur.
 
-                return View(values);
+                return View(values.ToPagedList(page, 10)); // Her sayfada en fazla 10 veri olsun
             }
             return View();
         }
 
-        public async Task<IActionResult> PassiveAdverts()
+        public async Task<IActionResult> PassiveAdverts(int page = 1)
         {
             var id = _loginService.GetUserId;
             var client = _httpClientFactory.CreateClient();
@@ -53,7 +54,7 @@ namespace RealEstate.UI.Areas.EstateAgent.Controllers
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
                 var values = JsonConvert.DeserializeObject<List<ResultProductAdvertListWithCategoryByEmployeeDto>>(jsonData);
 
-                return View(values);
+                return View(values.ToPagedList(page, 10)); // Her sayfada en fazla 10 veri olsun
             }
             return View();
         }

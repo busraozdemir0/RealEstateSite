@@ -1,4 +1,7 @@
-﻿@model List<ResultProductAdvertListWithCategoryByEmployeeDto>
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+
+@model IPagedList<ResultProductAdvertListWithCategoryByEmployeeDto>
 @{
     ViewData["Title"] = "PassiveAdverts";
     Layout = "~/Areas/EstateAgent/Views/LayoutEstateAgent/Index.cshtml";
@@ -11,7 +14,7 @@
         <div class="col-12">
             <div class="bg-light rounded h-100 p-4">
                 <h6 class="mb-4">Geçmiş İlan Listesi</h6>
-                <div class="table-responsive">
+                <div class="table-responsive mb-3">
                     <table class="table">
                         <thead>
                             <tr>
@@ -46,6 +49,11 @@
                     </table>
                     <a href="/EstateAgent/MyAdverts/CreateAdvert/" class="btn btn-outline-info">Yeni İlan Girişi</a>
                 </div>
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("PassiveAdverts", new { page }), new PagedListRenderOptions
+               {
+                   LiElementClasses = new List<string>
+                    {"page-link"}
+               })
             </div>
         </div>
     </div>

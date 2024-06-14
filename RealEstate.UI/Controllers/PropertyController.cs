@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using RealEstate.UI.DTOs.ProductDetailDtos;
 using RealEstate.UI.DTOs.ProductDtos;
 using RealEstate.UI.Models;
+using X.PagedList;
 
 namespace RealEstate.UI.Controllers
 {
@@ -17,7 +18,7 @@ namespace RealEstate.UI.Controllers
             _apiSettings = apiSettings.Value;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
             var client = _httpClientFactory.CreateClient(); // istemci ornegi olusturuldu.
             client.BaseAddress = new Uri(_apiSettings.BaseUrl);
@@ -27,7 +28,7 @@ namespace RealEstate.UI.Controllers
                 var jsonData = await responseMessage.Content.ReadAsStringAsync(); // Gelen icerigi string formatinda oku
                 var values = JsonConvert.DeserializeObject<List<ResultProductDto>>(jsonData);   // DeserializeObject => json bir degeri okuyor ve bizim istedigimiz metin formatina donusturur
                                                                                                 // SerializeObject => metin formatini json formatina donusturur.
-                return View(values);
+                return View(values.ToPagedList(page, 10)); // Her sayfada en fazla 10 veri olsun
             }
             return View();
         }

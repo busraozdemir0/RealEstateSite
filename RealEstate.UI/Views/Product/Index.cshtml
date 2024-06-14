@@ -1,4 +1,7 @@
-﻿@model List<ResultProductDto>
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+
+@model IPagedList<ResultProductDto>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Admin/Index.cshtml";
@@ -11,7 +14,7 @@
         <div class="col-12">
             <div class="bg-light rounded h-100 p-4">
                 <h6 class="mb-4">İlan Listesi</h6>
-                <div class="table-responsive">
+                <div class="table-responsive mb-3">
                     <table class="table">
                         <thead>
                             <tr>
@@ -72,6 +75,13 @@
                     </table>
                     <a asp-controller="Product" asp-action="CreateProduct" class="btn btn-outline-info">Yeni İlan Girişi</a>
                 </div>
+
+               @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions
+               {
+                   LiElementClasses = new List<string>
+                    {"page-link"}
+               })
+
             </div>
         </div>
     </div>
