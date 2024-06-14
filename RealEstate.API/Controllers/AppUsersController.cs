@@ -57,5 +57,12 @@ namespace RealEstate.API.Controllers
             var value = await _appUserRepository.GetAppUser(appUserId);
             return Ok(value);
         }
+
+        [HttpGet("GetLoginUserProfile/{appUserId}")]
+        public async Task<IActionResult> GetLoginUserProfile(int appUserId)
+        {
+            var value = await _appUserRepository.GetLoginUserProfile(appUserId);
+            return Ok(value);
+        }
     }
 }

@@ -73,6 +73,18 @@ namespace RealEstate.API.Models.Repositories.AppUserRepositories
             }
         }
 
+        public async Task<ProfileUpdateDto> GetLoginUserProfile(int appUserId)
+        {
+            string query = "Select * From AppUser Where UserId=@userId";
+            var parameters = new DynamicParameters();
+            parameters.Add("@userId", appUserId);
+            using (var connection = _context.CreateConnection())
+            {
+                var value = await connection.QueryFirstOrDefaultAsync<ProfileUpdateDto>(query, parameters);
+                return value;
+            }
+        }
+
         public async Task UpdateAppUser(UpdateAppUserDto updateAppUserDto)
         {
             string query = "Update AppUser set Name=@name, UserName=@userName, Password=@password, UserRole=@userRole, Email=@email, PhoneNumber=@phoneNumber, UserImageUrl=@userImageUrl where UserId=@userId";

@@ -10,5 +10,6 @@ namespace RealEstate.API.Models.Repositories.AppUserRepositories
         Task DeleteAppUser(int appUserId);
         Task UpdateAppUser(UpdateAppUserDto updateAppUserDto);
         Task<GetByIDAppUserDto> GetAppUser(int appUserId);
+        Task<ProfileUpdateDto> GetLoginUserProfile(int appUserId); // Giris yapan kullanicinin bilgilerini guncelleme sayfasinda getirecek olan metod
     }
 }

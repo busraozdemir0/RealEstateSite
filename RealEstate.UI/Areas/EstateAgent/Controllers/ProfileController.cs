@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RealEstate.UI.DTOs.AppUserDtos;
@@ -8,8 +7,9 @@ using RealEstate.UI.Models;
 using RealEstate.UI.Services;
 using System.Text;
 
-namespace RealEstate.UI.Controllers
+namespace RealEstate.UI.Areas.EstateAgent.Controllers
 {
+    [Area("EstateAgent")]
     [Authorize]
     public class ProfileController : Controller
     {
@@ -41,12 +41,12 @@ namespace RealEstate.UI.Controllers
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
                 var value = JsonConvert.DeserializeObject<UpdateAppUserDto>(jsonData);
-               
+
                 ViewBag.roleId = value.UserRole; // Kullanicinin rol bilgisini guncellemeyecegimiz icin ViewBag ile tasiyalim
-                
+
                 return View(value);
             }
-            return View(); 
+            return View();
         }
 
         [HttpPost]
@@ -59,7 +59,7 @@ namespace RealEstate.UI.Controllers
             var responseMessage = await client.PutAsync("AppUsers", stringContent);
             if (responseMessage.IsSuccessStatusCode)
             {
-                return RedirectToAction("Index","Dashboard");
+                return Redirect("/EstateAgent/Dashboard/Index/");
             }
 
             return View();
