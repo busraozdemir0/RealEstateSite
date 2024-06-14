@@ -166,7 +166,7 @@ namespace RealEstate.UI.Controllers
         {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_apiSettings.BaseUrl);
-            var responseMessage = await client.GetAsync("Products/ProductDealOfTheDayStatusChangeToTrue/"+id);
+            var responseMessage = await client.GetAsync("Products/ProductDealOfTheDayStatusChangeToTrue/" + id);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
@@ -211,6 +211,8 @@ namespace RealEstate.UI.Controllers
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
                 var values = JsonConvert.DeserializeObject<UpdateProductDto>(jsonData);
 
+                ViewBag.appUserId = values.AppUserId; // İlani ekleyen kullanicinin id bilgisi degismemesi icin boyle bir yol izliyoruz.
+
                 // Kategorileri alma
                 var client2 = _httpClientFactory.CreateClient();
                 client2.BaseAddress = new Uri(_apiSettings.BaseUrl);
@@ -242,9 +244,6 @@ namespace RealEstate.UI.Controllers
             updateProductDto.AdvertisementDate = DateTime.Now;
             updateProductDto.ProductStatus = true;
 
-            var id = _loginService.GetUserId;
-            updateProductDto.AppUserId = int.Parse(id);
-
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(updateProductDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
@@ -255,6 +254,30 @@ namespace RealEstate.UI.Controllers
                 return RedirectToAction("Index");
             }
 
+            return View();
+        }
+
+        public async Task<IActionResult> ProductStatusChangeToTrue(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.GetAsync("Products/ProductStatusChangeToTrue/" + id);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+
+        public async Task<IActionResult> ProductStatusChangeToFalse(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.GetAsync("Products/ProductStatusChangeToFalse/" + id);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
             return View();
         }
 

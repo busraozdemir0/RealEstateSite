@@ -14,6 +14,7 @@
         public string address { get; set; }
         public string description { get; set; }
         public bool dealOfTheDay { get; set; }
+        public bool productStatus { get; set; }
         public DateTime advertisementDate { get; set; }
         public string SlugUrl { get; set; }
 

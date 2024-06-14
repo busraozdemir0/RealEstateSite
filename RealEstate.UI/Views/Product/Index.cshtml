@@ -27,6 +27,7 @@
                                 <th scope="col">Güncelle</th>
                                 <th scope="col">Sitede Gör</th>
                                 <th scope="col">Günün Fırsatı</th>
+                                <th scope="col">Aktif / Pasif</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -53,6 +54,16 @@
                                         @if (!item.dealOfTheDay)
                                         {
                                             <a data-id="@item.productID" asp-controller="Product" asp-action="ProductDealOfTheDayStatusChangeToTrue" asp-route-id="@item.productID" class="btn btn-outline-warning">Aktif Yap</a>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.productStatus)
+                                        {
+                                            <a data-id="@item.productID" asp-controller="Product" asp-action="ProductStatusChangeToFalse" asp-route-id="@item.productID" class="btn btn-outline-secondary">Pasif Yap</a>
+                                        }
+                                        @if (!item.productStatus)
+                                        {
+                                            <a data-id="@item.productID" asp-controller="Product" asp-action="ProductStatusChangeToTrue" asp-route-id="@item.productID" class="btn btn-outline-warning">Aktif Yap</a>
                                         }
                                     </td>
                                 </tr>

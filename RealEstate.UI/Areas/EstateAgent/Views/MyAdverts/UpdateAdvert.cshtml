@@ -8,7 +8,7 @@
     <div class="row g-4">
         <div class="col-12">
             <div class="bg-light rounded h-100 p-4">
-                <h6 class="mb-4">İlan Güncelleme Ekleme Sayfası</h6>
+                <h6 class="mb-4">İlan Güncelleme Sayfası</h6>
                 <form method="post">
                     <input type="hidden" asp-for="ProductID" />
                     <label>İlan Başlığı</label>
@@ -26,8 +26,12 @@
                     <label>Fiyat</label>
                     <input type="text" asp-for="Price" class="form-control" />
                     <br />
-                    <label>Tür</label>
-                    <input type="text" asp-for="Type" class="form-control" />
+                    <label>Tür Seçin</label>
+                    <select id="cities" asp-for="Type" class="form-control">
+                        <option value="">--- Tür Seçin ---</option>
+                        <option value="Satılık">Satılık</option>
+                        <option value="Kiralık">Kiralık</option>
+                    </select>
                     <br />
                     <label>Kapak Fotoğrafı</label>
                     <input type="text" asp-for="CoverImage" class="form-control" />

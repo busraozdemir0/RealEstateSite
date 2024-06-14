@@ -122,5 +122,19 @@ namespace RealEstate.API.Controllers
             await _productRepository.UpdateProduct(updateProductDto);
             return Ok("İlan başarılı bir şekilde güncellendi.");
         }
+
+        [HttpGet("ProductStatusChangeToTrue/{id}")] // İlgili ilani aktif yapma
+        public async Task<IActionResult> ProductStatusChangeToTrue(int id)
+        {
+            await _productRepository.ProductStatusChangeToTrue(id);
+            return Ok("İlan aktif olarak işaretlendi.");
+        }
+
+        [HttpGet("ProductStatusChangeToFalse/{id}")] // İlgili ilani pasif yapma
+        public async Task<IActionResult> ProductStatusChangeToFalse(int id)
+        {
+            await _productRepository.ProductStatusChangeToFalse(id);
+            return Ok("İlan pasif olarak işaretlendi.");
+        }
     }
 }

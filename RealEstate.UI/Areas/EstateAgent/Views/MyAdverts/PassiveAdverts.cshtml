@@ -20,10 +20,10 @@
                                 <th scope="col">Kategori</th>
                                 <th scope="col">Fiyat</th>
                                 <th scope="col">Tür</th>
+                                <th scope="col">Detay Ekle</th>
                                 <th scope="col">Sil</th>
-                                <th scope="col">Aktif Yap</th>
                                 <th scope="col">Güncelle</th>
-                                <th scope="col">Sitede Gör</th>
+                                <th scope="col">Aktif Yap</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -36,10 +36,10 @@
                                     <td>@item.CategoryName</td>
                                     <td>@item.Price</td>
                                     <td>@item.Type</td>
-                                    <td><a data-id="@item.ProductID" asp-controller="Product" asp-action="DeleteProduct" asp-route-productId="@item.ProductID" class="btn btn-outline-danger">Sil</a></td>
-                                    <td><a data-id="@item.ProductID" asp-controller="Product" asp-action="DeleteProduct" asp-route-productId="@item.ProductID" class="btn btn-outline-warning">Aktif Yap</a></td>
-                                    <td><a data-id="@item.ProductID" asp-controller="Product" asp-action="UpdateProduct" asp-route-productId="@item.ProductID" class="btn btn-outline-success">Güncelle</a></td>
-                                    <td><a data-id="@item.ProductID" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@item.ProductID" class="btn btn-outline-primary">Sitede Gör</a></td>
+                                    <td><a href="/EstateAgent/MyAdverts/AddProductDetail/@item.ProductID" class="btn btn-outline-warning">Detay Ekle</a></td>
+                                    <td><a href="/EstateAgent/MyAdverts/DeleteAdvert/@item.ProductID" class="btn btn-outline-danger">Sil</a></td>
+                                    <td><a href="/EstateAgent/MyAdverts/UpdateAdvert/@item.ProductID" class="btn btn-outline-success">Güncelle</a></td>
+                                    <td><a href="/EstateAgent/MyAdverts/ProductStatusChangeToTrue/@item.ProductID" class="btn btn-outline-warning">Aktif Yap</a></td>
                                 </tr>
                             }
                         </tbody>

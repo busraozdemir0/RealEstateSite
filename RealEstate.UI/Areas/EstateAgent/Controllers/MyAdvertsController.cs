@@ -252,5 +252,29 @@ namespace RealEstate.UI.Areas.EstateAgent.Controllers
 
             return View();
         }
+
+        public async Task<IActionResult> ProductStatusChangeToTrue(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.GetAsync("Products/ProductStatusChangeToTrue/" + id);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return Redirect("/EstateAgent/MyAdverts/PassiveAdverts/");
+            }
+            return View();
+        }
+
+        public async Task<IActionResult> ProductStatusChangeToFalse(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+            var responseMessage = await client.GetAsync("Products/ProductStatusChangeToFalse/" + id);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return Redirect("/EstateAgent/MyAdverts/ActiveAdverts/");
+            }
+            return View();
+        }
     }
 }

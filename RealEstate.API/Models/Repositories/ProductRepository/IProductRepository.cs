@@ -19,5 +19,7 @@ namespace RealEstate.API.Models.Repositories.ProductRepository
         Task DeleteProduct(int productId);
         Task<GetProductByIdDto> GetProductById(int id); // id'ye gore ilani getirecek (user Id bilgisi ile)
         Task UpdateProduct(UpdateProductDto updateProductDto);
+        Task ProductStatusChangeToTrue(int id); // Bu ilani aktif yap
+        Task ProductStatusChangeToFalse(int id); // Bu ilani pasif yap
     }
 }

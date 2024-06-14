@@ -11,6 +11,8 @@
                 <form method="post">
                     <input type="hidden" asp-for="ProductID" />
 
+                    <input type="hidden" asp-for="AppUserId" value="@ViewBag.appUserId" />
+
                     <label>İlan Başlığı</label>
                     <input type="text" asp-for="Title" class="form-control" />
                     <br />
@@ -26,14 +28,21 @@
                     <label>Fiyat</label>
                     <input type="text" asp-for="Price" class="form-control" />
                     <br />
-                    <label>Tür</label>
-                    <input type="text" asp-for="Type" class="form-control" />
+                    <label>Tür Seçin</label>
+                    <select id="cities" asp-for="Type" class="form-control">
+                        <option value="">--- Tür Seçin ---</option>
+                        <option value="Satılık">Satılık</option>
+                        <option value="Kiralık">Kiralık</option>
+                    </select>
                     <br />
                     <label>Kapak Fotoğrafı</label>
                     <input type="text" asp-for="CoverImage" class="form-control" />
                     <br />
                     <label>İlan Açık Adresi</label>
                     <textarea asp-for="Address" class="form-control" rows="5"></textarea>
+                    <br />
+                    <label>İlan Açıklaması</label>
+                    <textarea asp-for="Description" class="form-control" rows="5"></textarea>
                     <br />
                     <button class="btn btn-primary">İlanı Kaydet</button>
                 </form>
