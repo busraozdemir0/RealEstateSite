@@ -1,0 +1,44 @@
+﻿@model List<ResultInBoxMessageDto>
+@{
+    ViewData["Title"] = "InBox";
+    Layout = "~/Areas/EstateAgent/Views/LayoutEstateAgent/Index.cshtml";
+
+    int count = 0;
+}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-light rounded h-100 p-4">
+                <h6 class="mb-4">Gelen Kutusu</h6>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Gönderen Adı</th>
+                                <th scope="col">Konu</th>
+                                <th scope="col">Gönderilme Tarihi</th>
+                                <th scope="col">Detay</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                count++;
+                                <tr>
+                                    <th scope="row">@count</th>
+                                    <td>@item.Name</td>
+                                    <td>@item.Subject</td>
+                                    <td>@item.SendDate.ToString("dd-MMM-yyyy")</td>
+                                    <td><a href="/EstateAgent/Message/GetMessageDetail/@item.MessageID" class="btn btn-outline-primary">Detay</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <a href="/EstateAgent/Message/CreateMessage/" class="btn btn-outline-info">Yeni Mesaj Oluştur</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

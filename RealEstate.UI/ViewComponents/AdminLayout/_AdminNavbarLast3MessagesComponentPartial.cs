@@ -29,6 +29,7 @@ namespace RealEstate.UI.ViewComponents.AdminLayout
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
                 var values = JsonConvert.DeserializeObject<List<ResultInBoxMessageDto>>(jsonData);
+                ViewBag.MessageCount = values.Count();
                 return View(values);
             }
             return View();

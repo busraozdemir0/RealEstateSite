@@ -28,7 +28,8 @@ namespace RealEstate.UI.Areas.EstateAgent.ViewComponents.EstateAgentNavbarViewCo
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<ResultInBoxMessageDto>>(jsonData); 
+                var values = JsonConvert.DeserializeObject<List<ResultInBoxMessageDto>>(jsonData);
+                ViewBag.MessageCount = values.Count();
                 return View(values);
             }
             return View();
