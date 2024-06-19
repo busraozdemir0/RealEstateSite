@@ -1,0 +1,28 @@
+﻿@model GetByIDMessageDto
+@{
+    ViewData["Title"] = "GetMessageDetail";
+    Layout = "~/Views/Admin/Index.cshtml";
+}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-light rounded h-100 p-4">
+                <h6 class="mb-4">Mesaj Detay Sayfası</h6>
+                <form>
+                    <input type="hidden" asp-for="MessageID" disabled />
+                    <label>Adı</label>
+                    <input type="text" asp-for="Name" class="form-control" disabled />
+                    <br />
+                    <label>Konu</label>
+                    <input type="text" asp-for="Subject" class="form-control" disabled />
+                    <br />
+                    <label>Mesaj Tarihi ve İçeriği: @Model.SendDate.ToString("dd-MMM-yyyy")</label>
+                    <textarea type="text" asp-for="Detail" class="form-control" disabled rows="5" ></textarea>
+                    <br />
+                    <a href="/Message/InBox/" class="btn btn-secondary"><i class="fa fa-arrow-left"></i> Geri</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

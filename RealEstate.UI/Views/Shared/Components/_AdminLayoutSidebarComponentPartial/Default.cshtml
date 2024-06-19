@@ -17,7 +17,14 @@
             <a asp-controller="Dashboard" asp-action="Index" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
             <a asp-controller="Statistics" asp-action="Index" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>İstatistikler</a>
             <a asp-controller="Profile" asp-action="UpdateProfile" class="nav-item nav-link"><i class="fa fa-cog me-2"></i>Ayarlar</a>
-            <a href="#" class="nav-item nav-link"><i class="fa fa-envelope me-2"></i>Mail İşlemleri</a>
+            <div class="nav-item dropdown">
+                <a href="#" style="color:black;" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-envelope me-2"></i>Mail İşlemleri</a>
+                <div class="dropdown-menu bg-transparent border-0">
+                    <a href="/Message/InBox/" class="dropdown-item">Gelen Kutusu</a>
+                    <a href="/Message/SendBox/" class="dropdown-item">Gönderilen Mesajlar</a>
+                    <a href="/Message/CreateMessage/" class="dropdown-item">Yeni Mesaj</a>
+                </div>
+            </div>
             <a asp-controller="Contact" asp-action="AdminContactList" class="nav-item nav-link"><i class="fa fa-inbox me-2"></i>Gelen Mesajlar</a>
             <a asp-controller="Category" asp-action="Index" class="nav-item nav-link"><i class="fa fa-layer-group me-2"></i>Kategoriler</a>
             <a asp-controller="Product" asp-action="Index" class="nav-item nav-link"><i class="fa fa-th me-2"></i>İlanlar</a>

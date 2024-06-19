@@ -44,7 +44,8 @@
     // Calender
     $('#calender').datetimepicker({
         inline: true,
-        format: 'L'
+        format: 'L',
+        onlanguagechange:'tr'
     });
 
 

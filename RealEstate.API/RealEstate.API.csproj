@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <None Remove="DTOs\ProductDtos\ResultLast5ProductWithCategoryDto.cs~RF6b8be661.TMP" />
+    <None Remove="Models\Repositories\AppUserRepositories\IAppUserRepository.cs~RF1e65b88b.TMP" />
   </ItemGroup>
 
   <ItemGroup>

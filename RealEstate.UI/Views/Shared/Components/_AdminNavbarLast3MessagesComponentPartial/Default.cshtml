@@ -9,12 +9,12 @@
 
         @foreach (var item in Model)
         {
-            <a href="#" class="dropdown-item">
+            <a data-id="@item.MessageID" asp-controller="Message" asp-action="GetMessageDetail" asp-route-messageId="@item.MessageID" class="dropdown-item">
                 <div class="d-flex align-items-center">
                     <img class="rounded-circle" src="@item.UserImageUrl" alt="" style="width: 40px; height: 40px;">
                     <div class="ms-2">
                         <h6 class="fw-normal mb-0">@item.Name bir mesaj gönderdi.</h6>
-                   @*      <small>@(((DateTime)item.SendDate).ToString("dd-MMM-yyyy"))</small> *@
+                        @*      <small>@(((DateTime)item.SendDate).ToString("dd-MMM-yyyy"))</small> *@
                         <small>
                             @{
                                 TimeSpan difference = DateTime.Now - item.SendDate; // iki tarih arasi fark
@@ -69,6 +69,6 @@
             </a>
             <hr class="dropdown-divider">
         }
-        <a href="/EstateAgent/Message/InBox/" class="dropdown-item text-center">Tüm Mesajları Gör</a>
+        <a href="/Message/InBox/" class="dropdown-item text-center">Tüm Mesajları Gör</a>
     </div>
 </div>
