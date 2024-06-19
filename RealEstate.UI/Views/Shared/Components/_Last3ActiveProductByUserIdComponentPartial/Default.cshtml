@@ -1,0 +1,29 @@
+﻿@model List<ResultProductAdvertListWithCategoryByEmployeeDto>
+
+<div class="sidebar-widget popular-posts">
+    <div class="sidebar-title">
+        <h4>Emlakçıya Ait Diğer İlanlar</h4>
+    </div>
+
+    @foreach (var item in Model)
+    {
+        <article class="post">
+            <figure class="post-thumb">
+                @if (item.CoverImage is not null)
+                {
+                    <img src="@item.CoverImage" class="radius-image" alt="">
+                }
+                else
+                {
+                    <img src="~/RealEstatePanel/assets/images/l1.jpg" class="radius-image" alt="" />
+                }
+            </figure>
+            <div class="text">
+                <a href="/Property/PropertySingle/@item.ProductID">
+                    @item.Title
+                </a>
+                <div class="post-info">@item.AdvertisementDate.ToString("dd MMMMM yyyy")</div>
+            </div>
+        </article>
+    }
+</div>

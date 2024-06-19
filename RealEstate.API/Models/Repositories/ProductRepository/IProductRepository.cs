@@ -21,5 +21,6 @@ namespace RealEstate.API.Models.Repositories.ProductRepository
         Task UpdateProduct(UpdateProductDto updateProductDto);
         Task ProductStatusChangeToTrue(int id); // Bu ilani aktif yap
         Task ProductStatusChangeToFalse(int id); // Bu ilani pasif yap
+        Task<List<ResultProductAdvertListWithCategoryByEmployeeDto>> GetLast3ProductAdvertListByUserIdAsync(int id); // Gelen userId bilgisine gore bu kullanicinin ekledigi son 3 ilan
     }
 }

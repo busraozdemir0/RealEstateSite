@@ -136,5 +136,12 @@ namespace RealEstate.API.Controllers
             await _productRepository.ProductStatusChangeToFalse(id);
             return Ok("İlan pasif olarak işaretlendi.");
         }
+
+        [HttpGet("GetLast3ProductAdvertListByUserIdAsync/{id}")] // Gelen userId bilgisine gore bu kullanicinin ekledigi son 3 ilan
+        public async Task<IActionResult> GetLast3ProductAdvertListByUserIdAsync(int id)
+        {
+            var values = await _productRepository.GetLast3ProductAdvertListByUserIdAsync(id);
+            return Ok(values);
+        }
     }
 }

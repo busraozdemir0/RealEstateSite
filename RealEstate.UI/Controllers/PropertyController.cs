@@ -74,9 +74,9 @@ namespace RealEstate.UI.Controllers
             DateTime date1 = DateTime.Now; // Simdiki zaman
             DateTime date2 = values.advertisementDate; // ilanin yayin tarihi
             TimeSpan timeSpan = date1 - date2; // Simdiki zaman ile ilan arasinda ne kadar gun var
-            int month = timeSpan.Days / 30; // Gun sayisini 30'a bolunce ay bilgisine ulasilir.
+            int days = timeSpan.Days; // Gun sayisini 30'a bolunce ay bilgisine ulasilir. Fakat biz yalnizca gun sayisini gosterelim.
 
-            ViewBag.datediff = month;
+            ViewBag.datediff = days;
 
             // Slug Url olusturm islemi icin
             string slugFromTitle = CreateSlug(values.title);

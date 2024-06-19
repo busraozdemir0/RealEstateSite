@@ -255,5 +255,18 @@ namespace RealEstate.API.Models.Repositories.ProductRepository
                 await connection.ExecuteAsync(query, parameters);
             }
         }
+
+        public async Task<List<ResultProductAdvertListWithCategoryByEmployeeDto>> GetLast3ProductAdvertListByUserIdAsync(int id)
+        {
+            // Gelen userId bilgisine gore o kullanicinin yayinlamis oldugu son 3 aktif ilan
+            string query = "Select Top(3) ProductID, Title, Price, City, District, CategoryName, CoverImage, Type, Address, DealOfTheDay, AdvertisementDate From Product inner join Category on Product.ProductCategory=Category.CategoryID where AppUserId=@userId And ProductStatus=1";
+            var parameters = new DynamicParameters();
+            parameters.Add("@userId", id);
+            using (var connection = _context.CreateConnection())
+            {
+                var values = await connection.QueryAsync<ResultProductAdvertListWithCategoryByEmployeeDto>(query, parameters);
+                return values.ToList();
+            }
+        }
     }
 }
