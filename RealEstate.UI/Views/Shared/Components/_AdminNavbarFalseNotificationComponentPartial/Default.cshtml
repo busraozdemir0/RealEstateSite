@@ -1,0 +1,18 @@
+﻿@model List<ResultToDoListDto> 
+
+<div class="nav-item dropdown">
+    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+        <i class="fa fa-bell me-lg-2"></i>
+        <span class="d-none d-lg-inline-flex">Bildirimler <span class="badge badge-danger" style="background-color:red; border-radius:50%; margin: 1px 5px 5px 5px;">@ViewBag.ToDoListCount</span></span>
+    </a>
+    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+        @foreach(var item in Model)
+        {
+            <a href="#" class="dropdown-item">
+                <h6 class="fw-normal mb-0">@item.Description</h6>
+            </a>
+            <hr class="dropdown-divider">
+        }
+        <a asp-controller="ToDoList" asp-action="Index" class="dropdown-item text-center">Tüm Bildirimleri Gör</a>
+    </div>
+</div>

@@ -6,14 +6,13 @@
             <h6 class="mb-0">Yapılacaklar Listesi</h6>
             <a asp-controller="ToDoList" asp-action="Index">Tümünü Gör</a>
         </div>
-        <div class="d-flex mb-2">
-            <input class="form-control bg-transparent" type="text" placeholder="Enter task">
-            <button type="button" class="btn btn-primary ms-2">Ekle</button>
-        </div>
+
+        @await Component.InvokeAsync("_AdminDashboardCreateToDoListComponentPartial")
+
         @foreach (var item in Model)
         { 
-            @* Eger ilgili ToDoList yapilmissa ustu cizili gelecek yapilmamissa normal gelecek *@
-            @if (item.ToDoListStatus)
+            @* Eger ilgili ToDoList yapilmissa(true) ustu cizili gelecek yapilmamissa(false) normal gelecek *@
+            @if (!item.ToDoListStatus)
             {
                 <div class="d-flex align-items-center border-bottom py-2">
                     <input class="form-check-input m-0" type="checkbox">

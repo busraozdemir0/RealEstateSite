@@ -1,0 +1,15 @@
+﻿@model CreateToDoListDto
+
+<div class="d-flex mb-2">
+    <form asp-controller="ToDoList" asp-action="CreateToDoList" method="post">
+        <div class="row">
+            <div class="col-md-8">
+                <input class="form-control bg-transparent" type="text" asp-for="Description" placeholder="Görev ekle">
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary">Ekle</button>
+            </div>
+        </div>
+    </form>
+
+</div>
