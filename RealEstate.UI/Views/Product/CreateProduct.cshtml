@@ -8,7 +8,7 @@
         <div class="col-12">
             <div class="bg-light rounded h-100 p-4">
                 <h6 class="mb-4">Yeni İlan Ekleme Sayfası</h6>
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     <label>İlan Başlığı</label>
                     <input type="text" asp-for="Title" class="form-control" />
                     <br />
@@ -31,8 +31,8 @@
                         <option value="Kiralık">Kiralık</option>
                     </select>
                     <br />
-                    <label>Kapak Fotoğrafı</label>
-                    <input type="text" asp-for="CoverImage" class="form-control" />
+                    <label>Kapak Fotoğrafı Seçin</label>
+                    <input type="file" asp-for="Image" class="form-control" />
                     <br />
                     <label>İlan Açık Adresi</label>
                     <textarea asp-for="Address" class="form-control" rows="5"></textarea>

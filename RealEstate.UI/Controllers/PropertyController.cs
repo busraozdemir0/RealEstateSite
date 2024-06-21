@@ -28,6 +28,7 @@ namespace RealEstate.UI.Controllers
                 var jsonData = await responseMessage.Content.ReadAsStringAsync(); // Gelen icerigi string formatinda oku
                 var values = JsonConvert.DeserializeObject<List<ResultProductDto>>(jsonData);   // DeserializeObject => json bir degeri okuyor ve bizim istedigimiz metin formatina donusturur
                                                                                                 // SerializeObject => metin formatini json formatina donusturur.
+                ViewBag.productCount = values.Count();
                 return View(values.ToPagedList(page, 10)); // Her sayfada en fazla 10 veri olsun
             }
             return View();

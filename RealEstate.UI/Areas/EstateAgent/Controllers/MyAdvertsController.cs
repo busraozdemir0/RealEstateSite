@@ -20,11 +20,13 @@ namespace RealEstate.UI.Areas.EstateAgent.Controllers
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILoginService _loginService;
         private readonly ApiSettings _apiSettings;
-        public MyAdvertsController(IHttpClientFactory httpClientFactory, ILoginService loginService, IOptions<ApiSettings> apiSettings)
+        private readonly IWebHostEnvironment _webHost;
+        public MyAdvertsController(IHttpClientFactory httpClientFactory, ILoginService loginService, IOptions<ApiSettings> apiSettings, IWebHostEnvironment webHost)
         {
             _httpClientFactory = httpClientFactory;
             _loginService = loginService;
             _apiSettings = apiSettings.Value;
+            _webHost = webHost;
         }
         public async Task<IActionResult> ActiveAdverts(int page = 1)
         {
@@ -91,14 +93,30 @@ namespace RealEstate.UI.Areas.EstateAgent.Controllers
             var id = _loginService.GetUserId;
             createProductDto.AppUserId = int.Parse(id);
 
-            var client = _httpClientFactory.CreateClient();
-            var jsonData = JsonConvert.SerializeObject(createProductDto);
-            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
-            var responseMessage = await client.PostAsync("Products", stringContent);
-            if (responseMessage.IsSuccessStatusCode)
+            if (createProductDto.Image != null)
             {
-                return Redirect("/EstateAgent/MyAdverts/ActiveAdverts/");
+                string wwwRootPath = _webHost.WebRootPath;
+                string filename = Path.GetFileNameWithoutExtension(createProductDto.Image.FileName);
+                string extension = Path.GetExtension(createProductDto.Image.FileName);
+                string imageUrl = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                string path = Path.Combine(wwwRootPath + "/ProductImageFiles/", imageUrl);
+
+                using (var filestream = new FileStream(path, FileMode.Create))
+                {
+                    await createProductDto.Image.CopyToAsync(filestream);
+                }
+
+                createProductDto.CoverImage = "/ProductImageFiles/" + imageUrl; // resim yolunu CoverImage'e atama
+
+                var client = _httpClientFactory.CreateClient();
+                var jsonData = JsonConvert.SerializeObject(createProductDto);
+                StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+                var responseMessage = await client.PostAsync("Products", stringContent);
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    return Redirect("/EstateAgent/MyAdverts/ActiveAdverts/");
+                }
             }
             return View();
         }
@@ -186,7 +204,7 @@ namespace RealEstate.UI.Areas.EstateAgent.Controllers
         {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_apiSettings.BaseUrl);
-            var responseMessage = await client.DeleteAsync($"Products/{id}"); 
+            var responseMessage = await client.DeleteAsync($"Products/{id}");
             if (responseMessage.IsSuccessStatusCode)
             {
                 return Redirect("/EstateAgent/MyAdverts/ActiveAdverts/");
@@ -217,11 +235,11 @@ namespace RealEstate.UI.Areas.EstateAgent.Controllers
                     var values2 = JsonConvert.DeserializeObject<List<ResultCategoryDto>>(jsonData2);
 
                     List<SelectListItem> categoryValues = (from x in values2.ToList()
-                                                       select new SelectListItem
-                                                       {
-                                                           Text = x.CategoryName,
-                                                           Value = x.CategoryID.ToString()
-                                                       }).ToList();
+                                                           select new SelectListItem
+                                                           {
+                                                               Text = x.CategoryName,
+                                                               Value = x.CategoryID.ToString()
+                                                           }).ToList();
                     ViewBag.categories = categoryValues;
                 }
 

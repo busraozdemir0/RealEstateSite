@@ -19,11 +19,13 @@ namespace RealEstate.UI.Controllers
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ApiSettings _apiSettings;
         private readonly ILoginService _loginService;
-        public ProductController(IHttpClientFactory httpClientFactory, IOptions<ApiSettings> apiSettings, ILoginService loginService)
+        private readonly IWebHostEnvironment _webHost;
+        public ProductController(IHttpClientFactory httpClientFactory, IOptions<ApiSettings> apiSettings, ILoginService loginService, IWebHostEnvironment webHost)
         {
             _httpClientFactory = httpClientFactory;
             _apiSettings = apiSettings.Value;
             _loginService = loginService;
+            _webHost = webHost;
         }
 
         public async Task<IActionResult> Index(int page = 1)
@@ -72,15 +74,32 @@ namespace RealEstate.UI.Controllers
             var id = _loginService.GetUserId;
             createProductDto.AppUserId = int.Parse(id);
 
-            var client = _httpClientFactory.CreateClient();
-            var jsonData = JsonConvert.SerializeObject(createProductDto);
-            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            client.BaseAddress = new Uri(_apiSettings.BaseUrl);
-            var responseMessage = await client.PostAsync("Products", stringContent);
-            if (responseMessage.IsSuccessStatusCode)
+            if (createProductDto.Image != null)
             {
-                return RedirectToAction("Index");
+                string wwwRootPath = _webHost.WebRootPath;
+                string filename = Path.GetFileNameWithoutExtension(createProductDto.Image.FileName);
+                string extension = Path.GetExtension(createProductDto.Image.FileName);
+                string imageUrl = filename + DateTime.Now.ToString("yymmssfff") + extension;
+                string path = Path.Combine(wwwRootPath + "/ProductImageFiles/", imageUrl);
+
+                using (var filestream = new FileStream(path, FileMode.Create))
+                {
+                    await createProductDto.Image.CopyToAsync(filestream);
+                }
+
+                createProductDto.CoverImage = "/ProductImageFiles/" + imageUrl; // resim yolunu CoverImage'e atama
+                
+                var client = _httpClientFactory.CreateClient();
+                var jsonData = JsonConvert.SerializeObject(createProductDto);
+                StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                client.BaseAddress = new Uri(_apiSettings.BaseUrl);
+                var responseMessage = await client.PostAsync("Products", stringContent);
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Index");
+                }
             }
+        
             return View();
         }
 

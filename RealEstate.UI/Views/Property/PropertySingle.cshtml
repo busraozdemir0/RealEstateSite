@@ -96,7 +96,7 @@
                 </div>
             </div>
 
-            @await Component.InvokeAsync("_PropertyAppUserComponentPartial")
+            @await Component.InvokeAsync("_PropertyAppUserComponentPartial", new { id = ViewBag.productID }) @* Gonderilen ilan ID'sine gore o ilani kimin ekledigi bilgisine ulasacagiz *@
 
         </div>
     </div>

@@ -23,7 +23,7 @@ namespace RealEstate.API.Models.Repositories.StatisticsRepositories
 
         public int ActiveEmployeeCount()
         {
-            string query = "Select Count(*) From Employee where Status = 1";
+            string query = "Select Count(*) From AppUser";
             using (var connection = _context.CreateConnection())
             {
                 var value = connection.QueryFirstOrDefault<int>(query);
