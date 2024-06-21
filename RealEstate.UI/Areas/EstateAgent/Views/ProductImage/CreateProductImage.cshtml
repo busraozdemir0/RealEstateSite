@@ -1,0 +1,23 @@
+﻿@model CreateProductImageDto
+@{
+    ViewData["Title"] = "CreateProductImage";
+    Layout = "~/Areas/EstateAgent/Views/LayoutEstateAgent/Index.cshtml";
+}
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-light rounded h-100 p-4">
+                <h6 class="mb-4">Yeni İlan Görseli Yükleme Sayfası</h6>
+                <form method="post" enctype="multipart/form-data">
+                    <label>Görsel Yüklenecek İlanı Seçin</label>
+                    @Html.DropDownListFor(x => x.ProductId, (List<SelectListItem>)ViewBag.products, new { @class = "form-control" })
+                    <br />
+                    <label>Görsel Url</label>
+                    <input type="file" asp-for="Image" class="form-control" />
+                    <br />
+                    <button class="btn btn-primary">İlan Görselini Yükle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using RealEstate.UI.DTOs.PropertyImageDtos;
+using RealEstate.UI.DTOs.ProductImageDtos;
 using RealEstate.UI.Models;
 
 namespace RealEstate.UI.ViewComponents.PropertySingle
@@ -24,7 +24,7 @@ namespace RealEstate.UI.ViewComponents.PropertySingle
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<PropertyImageDto>>(jsonData);
+                var values = JsonConvert.DeserializeObject<List<ProductImageDto>>(jsonData);
                 return View(values);
             }
             return View();

@@ -1,0 +1,55 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+
+@model IPagedList<ResultProductImageDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Admin/Index.cshtml";
+
+    int count = 0;
+}
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="bg-light rounded h-100 p-4">
+                <h6 class="mb-4">İlanlara Yüklenen Görseller Listesi</h6>
+                <div class="table-responsive mb-3">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Görsel</th>
+                                <th scope="col">Başlık</th>
+                                <th scope="col">Şehir</th>
+                                <th scope="col">Sil</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                count++;
+                                <tr>
+                                    <th scope="row">@count</th>
+                                    <td>@item.ImageUrl</td>
+                                    <td>@item.Title</td>
+                                    <td>@item.City</td>
+                                    <td><a data-id="@item.ProductImageId" asp-controller="ProductImage" asp-action="DeleteProductImage" asp-route-id="@item.ProductImageId" class="btn btn-outline-danger">Sil</a></td>
+                                   
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <a asp-controller="ProductImage" asp-action="CreateProductImage" class="btn btn-outline-info">Yeni Görsel Yükle</a>
+                </div>
+
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions
+               {
+                   LiElementClasses = new List<string>
+                    {"page-link"}
+               })
+
+            </div>
+        </div>
+    </div>
+</div>

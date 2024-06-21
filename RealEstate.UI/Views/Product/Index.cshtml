@@ -74,6 +74,8 @@
                         </tbody>
                     </table>
                     <a asp-controller="Product" asp-action="CreateProduct" class="btn btn-outline-info">Yeni İlan Girişi</a>
+
+                    <a asp-controller="ProductImage" asp-action="Index" class="btn btn-outline-success">İlanlara Yüklenen Görseller</a>
                 </div>
 
                @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions
