@@ -7,11 +7,11 @@ dünya senaryolarına oldukça uygun hazırlanmıştır. Bu sitede Admin, Emlak�
 Kayıt Ol sayfası aracılığıyla kayıt olan kullanıcı varsayılan olarak Employee rolüne sahip olduğu için Emlakçı Paneli'ne yönlendirilmektedir. Kullanıcı bu panelde ilan yükleyebilir, yönetebilir, 
 ilgili ilana ait birden fazla görsel yüklemesi yapabilmektedir. Kurulan mesajlaşma sistemi ile kendisine gelen mesajları görüntüleyebilir veya sistemde var olan kullanıcılara mesaj atabilmektedir.
 
-Asp.Net Core 8.0 kullanılarak geliştirilen bu projede, Back-End'de Web API kullanılmış olup Front-End'de ise bu API katmanı consume edilmiştir. Veri tabanı işlemleri için ise Dapper ORM kullanılmıştır.
+ASP.NET Core 8.0 Web API ve MVC kullanılarak geliştirdiğim proje, tüm CRUD işlemleri için Back-End'de Web API kullanılmış olup Front-End'de ise bu API katmanı consume edilmiştir. Dinamik veritabanı işlemleri için ise Dapper ORM kullanılmıştır.
 ###
 
 # Kullanılan Teknolojiler
-- Asp.Net Core 8.0
+- Asp.Net Core 8.0 MVC
 - Asp.Net Core 8.0 Web API
 - MSSQL Server
 - Dapper ORM (DB First)
@@ -21,6 +21,19 @@ Asp.Net Core 8.0 kullanılarak geliştirilen bu projede, Back-End'de Web API kul
 - Html, Css
 - JavaScript
 - Bootstrap
+
+# Front-End
+- Asp.Net Core 8.0 MVC
+- Html
+- Css
+- Bootstrap
+- JavaScript
+
+# Back-End
+- Asp.Net Core 8.0 Web API
+- MSSQL Server
+- Dapper
+- Swagger
   
 # Projenin Öne Çıkan Özellikleri
 - Veri Tabanı işlemleri için Dapper ORM kullanımı
